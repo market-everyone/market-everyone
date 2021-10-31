@@ -11,15 +11,20 @@
  - Spring Boot 2.5.6
  - Spring Data JPA 
  - Thymeleaf
+
 **Build Tool**
  - Gradle
+
 **DataBase** 
  - MySQL
+
 **Cooperation Tool**
  - Google Docs
  - Git
+
 **CI/CD**
  - Jenkins
+
 **Infra**
  - AWS EC2
  - AWS RDS
