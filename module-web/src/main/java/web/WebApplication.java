@@ -1,13 +1,11 @@
-package org.pnm.marketeveryone;
+package web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MarketEveryoneApplication {
-
+public class WebApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MarketEveryoneApplication.class, args);
+        SpringApplication.run(WebApplication.class, args);
     }
-
 }
