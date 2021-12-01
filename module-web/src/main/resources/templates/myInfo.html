@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout (~{::title}, ~{::content})">
+<head>
+  <meta charset="UTF-8">
+  <title>마켓에브리원-메인</title>
+</head>
+
+<div th:fragment="content" class="col-lg-9" >
+<!--  <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">-->
+
+<!--    <h3>주문 상세정보</h3>-->
+<!--    <br>주문일자 2021.11.16-->
+<!--  </div>-->
+
+  <div class="row">
+
+    <!--    <h3>주문 상세정보</h3> <br>-->
+    <!--    <div class="col-lg-4 col-md-6 mb-4"> 주문일자 2021.11.16 </div>-->
+
+    <div class="content">
+      <div class="container">
+
+        <br>
+        <h3>회원 정보 수정</h3> <br>
+        <div class="table-responsive">
+          <B>기본 정보</B>
+          <table class="table custom-table">
+
+
+            <tbody>
+            <tr>
+              <td>아이디</td>
+              <td>abc123</td>
+            </tr>
+
+            <tr>
+              <td>닉네임</td>
+              <td>happy</td>
+            </tr>
+
+            <tr>
+              <td>비밀번호</td>
+              <td>********</td>
+            </tr>
+
+            <tr>
+              <td>이메일</td>
+              <td>abc@gmail.com</td>
+            </tr>
+
+            <tr>
+              <td>휴대전화</td>
+              <td>010-1234-5678</td>
+            </tr>
+
+            <tr>
+              <td>생일</td>
+              <td>12월 25일</td>
+            </tr>
+
+            </tbody>
+
+
+          </table>
+        </div>
+
+        <br>
+
+        <div class="table-responsive">
+          <B>기본 배송지 정보</B>
+          <table class="table custom-table">
+
+            <tbody>
+            <tr>
+              <td>수령인</td>
+              <td>홍길동</td>
+            </tr>
+
+            <tr>
+              <td>연락처</td>
+              <td>010-1234-5678</td>
+            </tr>
+
+            <tr>
+              <td>배송지</td>
+              <td>12345<br>
+                인천광역시<br>
+                1234호</td>
+            </tr>
+
+            <tr>
+              <td>배송메모</td>
+              <td>문 앞에 놔주세요</td>
+            </tr>
+            </tbody>
+
+
+          </table>
+        </div>
+
+
+        <div th:align="center">
+          <button type="button" style="background-color:#49c449"> 수정하기 </button>
+        </div>
+
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+</html>
