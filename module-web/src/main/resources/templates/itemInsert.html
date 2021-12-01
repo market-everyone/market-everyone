@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout (~{::title}, ~{::content})">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="content" class="col-lg-9 pt-5">
+    <form th:action="@{/itemInsert}" method="post">
+        <div class="row">
+            <div class="col-6">
+                <img src="http://placehold.it/400x400" alt="">
+            </div>
+            <div class="col-6">
+                <table class="table">
+                    <tr>
+                        <th scope="row">상품명</th>
+                        <td><input type="text" th:name="itemName" th:id="itemName" placeholder="상품명을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">적립금</th>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">배송비</th>
+                        <td> 3000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">구매 옵션</th>
+                        <td>
+                            <select class="custom-select" aria-label="select">
+                                <option value="#">옵션1</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>금액</th>
+                        <td><input type="text" id="price" placeholder="상품금액을 입력해주세요."></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="itemExplain">
+            <div class="col">
+                <h2>상품 설명</h2>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="writeExplain">
+            <div class="col">
+                자바 스크립트 추가
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="itemInformation">
+            <div class="col">
+                <h2>작품 정보제공 고시</h2>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-end" id="writeInformation">
+            <div class="col-2">
+                <select class="custom-select" aria-label="select">
+                    <option value="#">옵션1</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="sellerInformation">
+            <div class="col">
+                <h2>판매자 정보</h2>
+            </div>
+        </div>
+        <div class="row" id="writeSeller">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th scope="row">대표자명</th>
+                        <td><input type="text" id="sellerName" placeholder="대표자명을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">이메일</th>
+                        <td><input type="text" id="sellerEmail" placeholder="이메일을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">전화번호</th>
+                        <td><input type="text" id="sellerPhone" placeholder="전화번호을 기입하세요."></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="deliveryInformation">
+            <div class="col">
+                <h2>배송 / 교환 / 환불</h2>
+            </div>
+        </div>
+        <div class="row" id="writeDelivery">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th scope="row">배송</th>
+                        <td><input type="text" id="delivery" placeholder="배송 규정을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">교환</th>
+                        <td><input type="text" id="change" placeholder="교환 규정을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">환불</th>
+                        <td><input type="text" id="refund" placeholder="환불 규정을 기입하세요."></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-end">
+            <input type="submit" th:value="등록">
+            <input type="button" th:value="취소" th:href="@{/itemInsert}">
+        </div>
+    </form>
+</div>
+</body>
+</html>
