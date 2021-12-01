@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout (~{::title}, ~{::content})">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-메인</title>
+</head>
+
+<div th:fragment="content" class="col-lg-9" >
+    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+
+
+    </div>
+
+    <div class="row">
+
+
+
+        <body>
+        <div class="content">
+            <div class="container">
+                <h3>리뷰 작성하기</h3><br>
+
+
+                [abc상점] 노이즈 캔슬링 헤드셋<br><br>
+                <select>
+                    <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                    <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                    <option value="3">&#9733;&#9733;&#9733;</option>
+                    <option value="2">&#9733;&#9733;</option>
+                    <option value="1">&#9733;</option>
+                </select>
+                <br>
+                상세한 후기를 작성해주세요.<br>
+                <textarea th:cols="50" th:rows="10" placeholder="내용을 20자 이상 남겨주세요."></textarea>
+                <br>
+                사진을 올려주세요.(선택)<br>
+                [네모네모]<br><br>
+
+
+                <div th:align="center">
+                    <button type="button" class="btn btn-success"> 리뷰 등록하기 </button>
+                    <button type="button"> 홈으로 가기 </button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+</html></title>
+</head>
+<body>
+
+</body>
+</html>
