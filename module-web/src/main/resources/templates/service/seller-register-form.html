@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/sc-base :: layout (~{::title}, ~{::content})">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-메인</title>
+</head>
+<div th:fragment="content" class="col-lg-9 my-4">
+    <div>
+        <input class="mt-4 w-75 form-control form-control-lg" type="text" placeholder="브랜드명">
+    </div>
+
+    <div>
+        <input class="mt-4 w-75 form-control form-control-lg" type="text" placeholder="브랜드설명">
+    </div>
+
+    <div>
+        <textarea class="mt-4 w-75 h-25 form-control form-control-lg" rows="10" placeholder="상품 설명글"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-user btn-block btn-lg mt-4 w-75">판매자 등록 요청하기</button>
+</div>
+
+</html>
