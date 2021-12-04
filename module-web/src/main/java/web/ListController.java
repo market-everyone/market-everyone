@@ -25,8 +25,8 @@ public class ListController {
         return "myReviewWrite";
     }
 
-    @GetMapping("myInfo")
-    public String MyInfo(){
-        return "myInfo";
-    }
+//    @GetMapping("myInfo")
+//    public String MyInfo(){
+//        return "myInfo";
+//    }
 }
