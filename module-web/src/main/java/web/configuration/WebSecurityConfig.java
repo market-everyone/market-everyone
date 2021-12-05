@@ -3,26 +3,40 @@ package web.configuration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import web.security.JwtAuthenticationFilter;
 import web.security.oauth2.CustomAuthenticationFailureHandler;
 import web.security.oauth2.CustomAuthenticationSuccessHandler;
 import web.security.oauth2.Oauth2UserPrincipalService;
 
-@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String USER = "ADMIN";
+    private static final String ADMIN = "ADMIN";
 
     private final Oauth2UserPrincipalService oauth2UserPrincipalService;
+
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
+    public WebSecurityConfig(Oauth2UserPrincipalService oauth2UserPrincipalService,
+                             CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+                             CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
+        this.oauth2UserPrincipalService = oauth2UserPrincipalService;
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+    }
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
@@ -48,14 +62,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                /* h2 데이터베이스를 위한 설정*/
-                .csrf().disable()
-                .headers().frameOptions().disable()
+                /* h2 데이터베이스를 위한 설정 */
+                .csrf()
+                .disable()
+                .headers()
+                .frameOptions()
+                .disable()
+                /*                       */
                 .and()
-                .formLogin().disable()
-                .httpBasic().disable()
+                .formLogin()
+                .disable()
+                .httpBasic()
+                .disable()
                 .authorizeRequests()
-                .anyRequest().permitAll()
+                .antMatchers(
+        "/",
+                    "/error",
+                    "/favicon.ico",
+                    "/**/*.png",
+                    "/**/*.gif",
+                    "/**/*.svg",
+                    "/**/*.jpg",
+                    "/**/*.html",
+                    "/**/*.css",
+                    "/**/*.js"
+                )
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/admin/**")
+                .hasRole(ADMIN)
+                .antMatchers(HttpMethod.GET, "/admin/**")
+                .hasRole(ADMIN)
+                .anyRequest()
+                .permitAll()
                 .and()
                 .oauth2Login()
                 .authorizationEndpoint()
@@ -67,6 +105,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler);
 
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(logoutFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    private LogoutFilter logoutFilter() {
+        return new LogoutFilter(
+            (req, res, auth) -> res.sendRedirect("/"),
+            (req, res, auth) -> SecurityContextHolder.clearContext()
+        );
     }
 }

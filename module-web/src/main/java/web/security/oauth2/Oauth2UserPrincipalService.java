@@ -5,6 +5,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import web.exception.auth.UnsupportedOauthVendorException;
 import web.security.UserPrincipal;
 import web.security.oauth2.provider.GoogleUserInfo;
 import web.security.oauth2.provider.OAuth2UserInfo;
@@ -32,8 +33,7 @@ public class Oauth2UserPrincipalService extends DefaultOAuth2UserService {
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         } else {
-            throw new IllegalArgumentException();
-//            throw new UnsupportedOauthVendorException();
+            throw new UnsupportedOauthVendorException();
         }
 
         String provider = oAuth2UserInfo.getProvider();

@@ -28,7 +28,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
 
     private final List<String> authorizedRedirectUris;
-//    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     @Autowired
     private TokenProvider tokenProvider;
@@ -41,7 +40,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        log.info("CustomAuthenticationSuccessHandler.onAuthenticationSuccess");
         String targetUrl = determineTargetUrl(request, response, authentication);
 
         if (response.isCommitted()) {
@@ -72,7 +70,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         return  authorizedRedirectUris
                 .stream()
                 .anyMatch(authorizedRedirectUri -> {
-                    log.info("authorizedRedirectUri: {}", authorizedRedirectUri);
                     URI authorizedURI = URI.create(authorizedRedirectUri);
                     return authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
                             && authorizedURI.getPort() == clientRedirectUri.getPort();
