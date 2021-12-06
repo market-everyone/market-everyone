@@ -5,23 +5,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class OrderController {
-    @GetMapping("/orderList")
+    @GetMapping("/order/orderList")
     public String OrderList(){
-        return "orderList";
+        return "/order/orderList";
     }
 
-    @GetMapping("/orderListDetail")
+    @GetMapping("/order/orderListDetail")
     public String OrderListDetail(){
-        return "orderListDetail";
+        return "/order/orderListDetail";
     }
 
-    @GetMapping("payReady")
+    @GetMapping("/order/ayReady")
     public String PayReady(){
-        return "payReady";
+        return "/order/payReady";
     }
 
-    @GetMapping("payComp")
+    @GetMapping("/order/payComp")
     public String PayComp(){
-        return "payComp";
+        return "/order/payComp";
     }
 }
