@@ -5,28 +5,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ListController {
-    @GetMapping("goodsList")
+    @GetMapping("/user/goodsList")
     public String GoodsList(){
-        return "goodsList";
+        return "/user/goodsList";
     }
 
-    @GetMapping("reviewList")
+    @GetMapping("/user/reviewList")
     public String ReviewList(){
-        return "reviewList";
+        return "/user/reviewList";
     }
 
-    @GetMapping("myReviewList")
+    @GetMapping("/user/myReviewList")
     public String MyReviewList(){
-        return "myReviewList";
+        return "/user/myReviewList";
     }
 
-    @GetMapping("myReviewWrite")
+    @GetMapping("/user/myReviewWrite")
     public String MyReviewWrite(){
-        return "myReviewWrite";
+        return "/user/myReviewWrite";
     }
 
-    @GetMapping("myInfo")
+    @GetMapping("/user/myInfo")
     public String MyInfo(){
-        return "myInfo";
+        return "/user/myInfo";
     }
 }
