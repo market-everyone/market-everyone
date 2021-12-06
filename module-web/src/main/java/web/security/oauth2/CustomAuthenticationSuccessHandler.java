@@ -24,13 +24,9 @@ import java.util.Optional;
 @Slf4j
 @Component
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";
     public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
 
     private final List<String> authorizedRedirectUris;
-
-    @Autowired
-    private TokenProvider tokenProvider;
 
     public CustomAuthenticationSuccessHandler(
             @Value("${app.oauth2.authorized-redirect-uris}") List<String> authorizedRedirectUris) {

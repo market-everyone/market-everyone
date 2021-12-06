@@ -4,29 +4,20 @@
     <meta charset="UTF-8">
     <title>마켓에브리원-메인</title>
 </head>
-<div th:fragment="content" class="col-lg-9" >
-    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-    </div>
-
-    <div class="row" th:align="center">
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-                <a href="http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:8080/oauth2/redirect">구글 로그인</a>
-                <form th:action="@{/api/users/login}" method="post">
-                    <input type="text" name="email" id="email" placeholder="이메일"> <br>
-                    <input type="password" name="password" id="password" placeholder="패스워드"> <br>
-                    <p th:if="${loginError}" class="loginError">아이디 또는 패스워드가 잘못되었습니다.</p>
-
-                    <button type="submit" class="btn btn-success">로그인</button> <br>
-                    비밀번호 찾기 | 회원가입
-                </form>
-            </div>
+<div th:fragment="content" class="col-lg-9 mt-5" >
+    <span class="mb-4">
+        <img th:src="@{/images/google-logo.png}" alt="구글로그인 로고" width="50" height="50">
+        <a href="http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:8080/oauth2/redirect"
+           style="text-decoration: none; color: #1b1e21">구글 로그인</a>
+    </span>
+    <form th:action="@{/api/users/login}" method="post">
+        <div class="mb-3">
+            <input type="email" class="w-50 form-control" name="email" id="email" placeholder="이메일">
         </div>
-    </div>
+        <div class="mb-3">
+            <input type="password" class="w-50 form-control" name="password" id="password" placeholder="비밀번호">
+        </div>
+        <button type="submit" class="btn btn-success">로그인</button>
+    </form>
 </div>
 </html>

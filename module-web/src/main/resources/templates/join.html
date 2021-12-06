@@ -5,30 +5,24 @@
   <meta charset="UTF-8">
   <title>마켓에브리원-메인</title>
 </head>
-<div th:fragment="content" class="col-lg-9" >
-  <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol>
-  </div>
-
-  <div class="row" th:align="center">
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100">
-        <form th:action="@{/users/signup}" method="post">
-          <input type="email" name="email" id="email" placeholder="이메일"> <br>
-          <input type="text" name="accountId" id="accountId" placeholder="아이디"> <br>
-          <input type="password" name="password" id="password" placeholder="패스워드"> <br>
-<!--          <input type="password" name="password_confirm" placeholder="패스워드 확인"> <br>-->
-          <input type="text" id="city" name="city" placeholder="도시">
-          <input type="text" id="street" name="street" placeholder="거리">
-          <button type="submit" class="btn btn-success">회원가입</button> <br>
-        </form>
-      </div>
+<div th:fragment="content" class="col-lg-9 mt-5">
+  <form th:action="@{/users/signup}" method="post">
+    <div class="mb-3">
+      <input type="email" class="w-50 form-control" name="email" id="email" placeholder="이메일">
     </div>
-  </div>
-
+    <div class="mb-3">
+      <input type="text" class="w-50 form-control" name="accountId" id="accountId" placeholder="아이디">
+    </div>
+    <div class="mb-3">
+      <input type="password" class="w-50 form-control" name="password" id="password" placeholder="비밀번호">
+    </div>
+    <div class="mb-3">
+      <input type="text" class="w-50 form-control" name="city" id="city" placeholder="도시">
+    </div>
+    <div class="mb-3">
+      <input type="text" class="w-50 form-control" name="street" id="street" placeholder="거리">
+    </div>
+    <button type="submit" class="btn btn-success">회원가입</button>
+  </form>
 </div>
 </html>

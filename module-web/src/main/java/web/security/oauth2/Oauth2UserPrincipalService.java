@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Service
 public class Oauth2UserPrincipalService extends DefaultOAuth2UserService {
+
     private final UserRepository userRepository;
 
     public Oauth2UserPrincipalService(UserRepository userRepository) {

@@ -1,6 +1,5 @@
 package web.configuration;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
+import web.security.CustomLogoutFilter;
 import web.security.JwtAuthenticationFilter;
 import web.security.oauth2.CustomAuthenticationFailureHandler;
 import web.security.oauth2.CustomAuthenticationSuccessHandler;
@@ -21,7 +20,7 @@ import web.security.oauth2.Oauth2UserPrincipalService;
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String USER = "ADMIN";
+    private static final String USER = "USER";
     private static final String ADMIN = "ADMIN";
 
     private final Oauth2UserPrincipalService oauth2UserPrincipalService;
@@ -110,8 +109,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(logoutFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    private LogoutFilter logoutFilter() {
-        return new LogoutFilter(
+    private CustomLogoutFilter logoutFilter() {
+        return new CustomLogoutFilter(
             (req, res, auth) -> res.sendRedirect("/"),
             (req, res, auth) -> SecurityContextHolder.clearContext()
         );
