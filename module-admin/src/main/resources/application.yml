@@ -5,6 +5,12 @@ spring:
     user:
       name: user
       password: 1111
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: web.common.strategy.UpperCaseNamingStrategy
+    show-sql: true
 
 server:
   port: 8081
