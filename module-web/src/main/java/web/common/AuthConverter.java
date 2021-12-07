@@ -8,6 +8,7 @@ public class AuthConverter {
 
     public static User findCurrentUserFromAuth(Authentication authentication) {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+
         return principal.getUser();
     }
 }

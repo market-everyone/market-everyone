@@ -21,16 +21,11 @@ public class UserSignUpRequest {
 
     private String confirmPassword;
 
-    private String city;
-
-    private String street;
-
     public User toUser() {
         return User.builder()
                 .accountId(accountId)
                 .email(email)
                 .password(password)
-                .address(new Address(city, street))
                 .role(Role.ROLE_USER)
                 .point(INITIAL_POINT_ZERO)
                 .build();

@@ -1,18 +1,22 @@
 package web.configuration;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import web.security.CustomAccessDeniedHandler;
+import web.security.CustomAuthenticationEntryPoint;
 import web.security.CustomLogoutFilter;
-import web.security.JwtAuthenticationFilter;
+import web.security.CustomAuthenticationFilter;
 import web.security.oauth2.CustomAuthenticationFailureHandler;
 import web.security.oauth2.CustomAuthenticationSuccessHandler;
 import web.security.oauth2.Oauth2UserPrincipalService;
@@ -38,13 +42,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
-        jwtAuthenticationFilter.setFilterProcessesUrl("/api/users/login");
-        jwtAuthenticationFilter.setUsernameParameter("email");
-        jwtAuthenticationFilter.setPasswordParameter("password");
-        jwtAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
-        return jwtAuthenticationFilter;
+    public CustomAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
+        customAuthenticationFilter.setFilterProcessesUrl("/api/users/login");
+        customAuthenticationFilter.setUsernameParameter("email");
+        customAuthenticationFilter.setPasswordParameter("password");
+        customAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
+        return customAuthenticationFilter;
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers("/scss/**", "/vendor/**");
     }
 
     @Bean
@@ -73,24 +84,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .httpBasic()
                 .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
+                .and()
                 .authorizeRequests()
-                .antMatchers(
-        "/",
-                    "/error",
-                    "/favicon.ico",
-                    "/**/*.png",
-                    "/**/*.gif",
-                    "/**/*.svg",
-                    "/**/*.jpg",
-                    "/**/*.html",
-                    "/**/*.css",
-                    "/**/*.js"
-                )
-                .permitAll()
                 .antMatchers(HttpMethod.POST, "/admin/**")
                 .hasRole(ADMIN)
                 .antMatchers(HttpMethod.GET, "/admin/**")
                 .hasRole(ADMIN)
+                .antMatchers(HttpMethod.GET, "/users/mypage")
+                .hasAnyRole(ADMIN, USER)
                 .anyRequest()
                 .permitAll()
                 .and()

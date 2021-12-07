@@ -1,6 +1,7 @@
 package web.user.domain;
 
 import lombok.*;
+import web.user.controller.dto.request.UserInfoUpdateRequest;
 
 import javax.persistence.*;
 
@@ -21,6 +22,12 @@ public class User {
 
     private String password;
 
+    private String name;
+
+    private String phone;
+
+    private String memo;
+
     @Embedded
     private Address address;
 
@@ -32,4 +39,14 @@ public class User {
     private String provider;
     private String providerId;
 
+    public void update(UserInfoUpdateRequest request) {
+        accountId = request.getAccountId();
+        address = new Address(
+                request.getPostcode(),
+                request.getAddress(),
+                request.getDetailAddress());
+        name = request.getName();
+        phone = request.getPhone();
+        memo = request.getMemo();
+    }
 }

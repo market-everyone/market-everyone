@@ -1,12 +1,15 @@
 package web.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import web.user.domain.Role;
 import web.user.domain.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 public class UserPrincipal implements UserDetails, OAuth2User {
@@ -26,9 +29,7 @@ public class UserPrincipal implements UserDetails, OAuth2User {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(() -> "ROLE_USER");
-        return grantedAuthorities;
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
     }
 
     @Override

@@ -1,14 +1,13 @@
 package web.user.controller;
 
+import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import web.common.AuthConverter;
+import web.user.controller.dto.request.UserInfoUpdateRequest;
 import web.user.controller.dto.request.UserSignUpRequest;
 import web.user.controller.dto.response.UserInfoResponse;
 import web.user.domain.User;
@@ -30,8 +29,17 @@ public class UserController {
     @GetMapping("/mypage")
     public String findUser(Authentication authentication, Model model) {
         User user = AuthConverter.findCurrentUserFromAuth(authentication);
-        model.addAttribute("userInfo", UserInfoResponse.of(user));
+        UserInfoResponse userInfoResponse = userService.findById(user.getId());
+        model.addAttribute("userInfo", userInfoResponse);
         return "myInfo";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute UserInfoUpdateRequest userInfoUpdateRequest,
+                                Authentication authentication) {
+        User user =AuthConverter.findCurrentUserFromAuth(authentication);
+        userService.update(user.getId(), userInfoUpdateRequest);
+        return "redirect:/users/mypage";
     }
 
     @GetMapping("/login/error")

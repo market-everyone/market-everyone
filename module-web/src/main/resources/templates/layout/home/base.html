@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: common_header (${title})">
+    <title>마켓에브리원</title>
+</head>
+<body>
+<nav th:replace="layout/navigation :: common_nav"></nav>
+<div class="container">
+    <div class="row">
+        <div th:replace="${content}">컨텐츠 입니다.</div>
+    </div>
+</div>
+<footer th:replace="layout/footer :: common_footer"></footer>
+</body>
+
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</html>

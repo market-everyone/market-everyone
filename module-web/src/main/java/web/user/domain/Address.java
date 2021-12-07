@@ -12,7 +12,9 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class Address {
-    private String city;
+    private String postcode;
 
-    private String street;
+    private String address;
+
+    private String detailAddress;
 }
