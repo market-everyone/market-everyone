@@ -24,9 +24,4 @@ public class ListController {
     public String MyReviewWrite(){
         return "/user/myReviewWrite";
     }
-
-    @GetMapping("/user/myInfo")
-    public String MyInfo(){
-        return "/user/myInfo";
-    }
 }

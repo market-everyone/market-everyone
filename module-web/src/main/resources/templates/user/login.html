@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout (~{::title}, ~{::content})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/auth/base :: layout (~{::title}, ~{::content})">
 <head>
     <meta charset="UTF-8">
-    <title>마켓에브리원-메인</title>
+    <title>마켓에브리원</title>
 </head>
-<div th:fragment="content" class="col-lg-9" >
-    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel"></div>
-
-    <div class="row" th:align="center">
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-                <input type="text" name="user_name" placeholder="아이디"> <br>
-                <input type="text" name="user_name" placeholder="패스워드"> <br>
-                <button type="submit" class="btn btn-success">Login</button> <br>
-                비밀번호 찾기 | 회원가입
+<body>
+    <div th:fragment="content" class="col-lg-9 mt-5" >
+        <form th:action="@{/api/users/login}" method="post">
+            <div class="mb-4 mt-4">
+                <input type="email" class="form-control form-control-lg" name="email" id="email" placeholder="이메일"
+                    style="width: 26rem; height: 3rem; font-size: 16px">
             </div>
+            <div class="mb-4">
+                <input type="password" class="form-control form-control-lg" name="password" id="password" placeholder="비밀번호"
+                       style="width: 26rem; height: 3rem; font-size: 16px">
+            </div>
+            <button type="submit" class="btn btn-success mb-5" style="width: 26rem; height: 3rem">로그인</button>
+        </form>
+        <div style="margin-left: 7.5rem;">
+            <div style="font-size: 12px; color: #757575; margin-bottom: 0.5rem">SNS계정으로 간편 로그인/회원가입</div>
+            <a href="http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:8080/oauth2/redirect"
+                style="margin-left: 3.5rem;">
+                <img th:src="@{/images/google-logo.png}" alt="구글로그인 로고" width="65" height="65">
+            </a>
         </div>
     </div>
-</div>
+</body>
 </html>

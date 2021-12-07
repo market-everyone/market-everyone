@@ -1,7 +1,7 @@
-package web.member.controller;
+package web.user.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class MemberRestController {
+public class UserRestController {
 }
