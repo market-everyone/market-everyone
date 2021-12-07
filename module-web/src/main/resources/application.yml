@@ -10,7 +10,9 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+      naming:
+        physical-strategy: web.common.strategy.UpperCaseNamingStrategy
     show-sql: true
     defer-datasource-initialization: true
 

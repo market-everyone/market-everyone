@@ -6,11 +6,13 @@
 </head>
 
 <div th:fragment="content" class="col-lg-9" >
+    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+    </div>
+
     <div class="row">
 
         <div class="content">
             <div class="container">
-
                 <br>
                 <h3>주문/결제</h3> <br>
                 <div class="table-responsive">
@@ -23,7 +25,6 @@
                             <th scope="col">진행 상태</th>
                         </tr>
                         </thead>
-
 
                         <tbody>
                         <tr>
@@ -46,12 +47,9 @@
                             </td>
                             <td>배송 준비중</td>
                         </tr>
-
-
                         </tbody>
                     </table>
                 </div>
-
 
                 <br>
                 <div class="table-responsive">
@@ -81,20 +79,14 @@
                             <td>문 앞에 놔주세요</td>
                         </tr>
                         </tbody>
-
-
                     </table>
                 </div>
-
 
                 <div th:align="center">
                     <button type="button" class="btn btn-success"> 결제하기 </button>
                 </div>
-
-
             </div>
         </div>
-
 
     </div>
 </div>

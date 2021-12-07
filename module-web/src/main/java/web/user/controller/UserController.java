@@ -1,6 +1,5 @@
 package web.user.controller;
 
-import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -31,7 +30,7 @@ public class UserController {
         User user = AuthConverter.findCurrentUserFromAuth(authentication);
         UserInfoResponse userInfoResponse = userService.findById(user.getId());
         model.addAttribute("userInfo", userInfoResponse);
-        return "myInfo";
+        return "user/myInfo";
     }
 
     @PostMapping("/update")
@@ -52,12 +51,12 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "user/login";
     }
 
     @GetMapping("/join")
     public String signUpPage() {
-        return "join";
+        return "user/join";
     }
 
     /*      */

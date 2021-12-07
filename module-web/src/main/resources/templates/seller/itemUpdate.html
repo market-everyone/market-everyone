@@ -6,20 +6,20 @@
 </head>
 <body>
 <div th:fragment="content" class="col-lg-9 pt-5">
-    <form th:action="@{/itemInsertForm}" method="post" id="itemForm" th:object="${}">
+    <form th:action="@{/itemUpdateForm}" method="post">
         <div class="row">
             <div class="col-6">
-                <img src="http://placehold.it/400x400" alt="">
+                <img src="http://placehold.it/400x400" alt="값 받아오기">
             </div>
             <div class="col-6">
                 <table class="table">
                     <tr>
                         <th scope="row">상품명</th>
-                        <td><input type="text" th:field="|item.name|" placeholder="상품명을 기입하세요."></td>
+                        <td><input type="text" name="itemName" id="itemName" placeholder="상품명을 기입하세요." th:value="|값이 넣어옴|"></td>
                     </tr>
                     <tr>
                         <th scope="row">적립금</th>
-                        <td>250</td>
+                        <td>2</td>
                     </tr>
                     <tr>
                         <th scope="row">배송비</th>
@@ -27,11 +27,17 @@
                     </tr>
                     <tr>
                         <th scope="row">구매 옵션</th>
-                        <td id="options"></td>
+                        <td>
+                            <select class="custom-select" aria-label="select">
+                                <option th:text="|옵션명을 입력하세요|">옵션1</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>금액</th>
+                        <td><input type="text" id="price" placeholder="상품금액을 입력해주세요."></td>
                     </tr>
                 </table>
-                <span id="addOption">+</span>
-                <span id="delOption">-</span>
             </div>
         </div>
         <hr>
@@ -42,7 +48,9 @@
         </div>
         <hr>
         <div class="row" id="writeExplain">
-             <textarea th:id="'editor'" placeholder="This is some sample content."></textarea>
+            <div class="col">
+                자바 스크립트 추가
+            </div>
         </div>
         <hr>
         <div class="row" id="itemInformation">
@@ -54,7 +62,7 @@
         <div class="row justify-content-end" id="writeInformation">
             <div class="col-2">
                 <select class="custom-select" aria-label="select">
-                    <option value="#">옵션1</option>
+                    <option value="#"></option>
                 </select>
             </div>
         </div>
@@ -108,35 +116,10 @@
         </div>
         <hr>
         <div class="row justify-content-end">
-            <input type="submit" th:value="'등록'">
-            <input type="button" th:value="'취소'" th:href="@{/itemInsert}">
+            <input type="submit" th:value="수정">
+            <input type="button" th:value="취소" th:href="@{/itemList}">
         </div>
     </form>
-    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/ckeditor/ckeditor.js}"></script>
-    <script>CKEDITOR.replace('editor');</script>
-    <script>
-        $(document).ready(function () {
-
-            var num = 0;
-
-            $("span[id='addOption']").click(function () {
-                $('#options').append('<p class="small">옵션 <input type="text"></p>').attr("th:field", "option" + num);
-
-                $('#options').append('<p class="small">가격 <input type="text"></p>').attr("th:field", "price" + num);
-                num++;
-            });
-
-            $("span[id='delOption']").click(function () {
-                for (let i = 0; i < 2; i++) {
-                    $("#options").children('p:last').remove();
-                }
-                num--;
-            });
-        });
-
-
-    </script>
 </div>
 </body>
 </html>
