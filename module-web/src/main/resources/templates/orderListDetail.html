@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout (~{::title}, ~{::content})">
+<head>
+  <meta charset="UTF-8">
+  <title>마켓에브리원-메인</title>
+</head>
+
+<div th:fragment="content" class="col-lg-9" >
+  <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+
+    <h3>주문 상세정보</h3>
+    <br>주문일자 2021.11.16
+  </div>
+
+  <div class="row">
+
+<!--    <h3>주문 상세정보</h3> <br>-->
+<!--    <div class="col-lg-4 col-md-6 mb-4"> 주문일자 2021.11.16 </div>-->
+
+    <div class="content">
+      <div class="container">
+
+        <div class="table-responsive">
+          <table class="table custom-table">
+            <thead>
+              <tr>
+<!--                  <th scope="col">-->
+<!--                      <label class="control control&#45;&#45;checkbox">-->
+<!--                          <input type="checkbox" class="js-check-all" />-->
+<!--                          <div class="control__indicator"></div>-->
+<!--                      </label>-->
+<!--                  </th>-->
+                  <th scope="col" colspan="2">상품 정보</th>
+                  <th scope="col">상품 금액(수량)</th>
+                  <th scope="col">배송비</th>
+                  <th scope="col">진행 상태</th>
+<!--                  <th scope="col">Education</th>-->
+              </tr>
+            </thead>
+
+
+            <tbody>
+            <tr>
+              <td>
+                [사진]
+              </td>
+              <td>노이즈 캔슬링 헤드셋</td>
+              <td> 199,000(1개)
+              </td>
+              <td rowspan="2">2,500</td>
+              <td>배송 준비중</td>
+            </tr>
+
+            <tr>
+              <td>
+                [사진]
+              </td>
+              <td>헤드셋 파우치</td>
+              <td> 29,000(1개)
+              </td>
+<!--              <td>2,500</td>-->
+              <td>배송 준비중</td>
+            </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+
+
+        <br>
+        <h3>주문/결제 금액 정보</h3> <br>
+               <div class="table-responsive">
+                  <table class="table custom-table">
+
+                    <tbody>
+                    <tr>
+                      <td>상품 금액</td>
+                      <td>228,000</td>
+                      <td rowspan="2" th:align="center" style="background-color:#49c449">주문 금액</td>
+                      <td rowspan="2" th:align="center" style="background-color:#49c449">230,500</td>
+                    </tr>
+
+                    <tr>
+                      <td>배송비</td>
+                      <td>2,500</td>
+                    </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+
+        <br>
+        <h3>배송지 정보</h3> <br>
+        <div class="table-responsive">
+          <table class="table custom-table">
+
+            <tbody>
+            <tr>
+              <td>수령인</td>
+              <td>홍길동</td>
+            </tr>
+
+            <tr>
+              <td>연락처</td>
+              <td>010-1234-5678</td>
+            </tr>
+
+            <tr>
+              <td>배송지</td>
+              <td>12345<br>
+              인천광역시<br>
+              1234호</td>
+            </tr>
+
+            <tr>
+              <td>배송메모</td>
+              <td>문 앞에 놔주세요</td>
+            </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+
+
+        <div th:align="center">
+        <button type="button" class="btn btn-success"> 홈으로 가기 </button>
+        </div>
+
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+</html>

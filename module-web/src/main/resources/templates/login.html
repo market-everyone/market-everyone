@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout (~{::title}, ~{::content})">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-메인</title>
+</head>
+<div th:fragment="content" class="col-lg-9" >
+    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+    </div>
+
+    <div class="row" th:align="center">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <input type="text" name="user_name" placeholder="아이디"> <br>
+                <input type="text" name="user_name" placeholder="패스워드"> <br>
+                <button type="submit" class="btn btn-success">Login</button> <br>
+                비밀번호 찾기 | 회원가입
+            </div>
+        </div>
+    </div>
+</div>
+</html>
