@@ -38,3 +38,4 @@ out/
 
 application-dev.yml
 application-auth.yml
+application-datasource.yml
