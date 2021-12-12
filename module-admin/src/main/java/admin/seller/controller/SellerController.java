@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
@@ -24,5 +25,11 @@ public class SellerController {
     public String sellers(PageRequestDTO pageRequestDTO, Model model) {
         model.addAttribute("result", sellerService.getList(pageRequestDTO));
         return "seller/list";
+    }
+
+    @PostMapping("/delete")
+    public String deleteSeller(Long id) {
+        sellerService.deleteSeller(id);
+        return "redirect:/seller/list";
     }
 }

@@ -2,40 +2,39 @@ package admin.seller.service;
 
 import admin.common.dto.PageRequestDTO;
 import admin.common.dto.PageResultDTO;
-import admin.seller.controller.dto.SellerDTO;
+import admin.seller.controller.dto.SellerRequestDTO;
+import admin.seller.controller.dto.SellerResponseDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import web.seller.domain.Seller;
+import web.seller.domain.SellerRepository;
 
-public interface SellerService {
+import java.util.function.Function;
 
-    Seller register(SellerDTO dto);
+@RequiredArgsConstructor
+@Service
+public class SellerService {
 
-    PageResultDTO<SellerDTO, Seller> getList(PageRequestDTO requestDTO);
+    private final SellerRepository sellerRepository;
 
-    default Seller dtoToEntity(SellerDTO dto) {
-        return Seller.builder()
-                .id(dto.getId())
-                .email(dto.getEmail())
-                .password(dto.getPassword())
-                .brandName(dto.getBrandName())
-                .brandContent(dto.getBrandContent())
-                .itemContent(dto.getItemContent())
-                .imagePath(dto.getImagePath())
-                .sellerStatus(dto.getSellerStatus())
-                .build();
+    @Transactional
+    public Long save(SellerRequestDTO dto) {
+        return sellerRepository.save(dto.toEntity()).getId();
     }
 
-    default SellerDTO entityToDto(Seller entity) {
-        return SellerDTO.builder()
-                .id(entity.getId())
-                .email(entity.getEmail())
-                .password(entity.getPassword())
-                .brandName(entity.getBrandName())
-                .brandContent(entity.getBrandContent())
-                .itemContent(entity.getItemContent())
-                .imagePath(entity.getImagePath())
-                .regDate(entity.getRegDate())
-                .modDate(entity.getModDate())
-                .sellerStatus(entity.getSellerStatus())
-                .build();
+    @Transactional(readOnly = true)
+    public PageResultDTO<SellerResponseDTO, Seller> getList(PageRequestDTO requestDTO) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("SELLER_NO"));
+        Page<Seller> result = sellerRepository.findApprovalSellers(pageable);
+        Function<Seller, SellerResponseDTO> fn = (SellerResponseDTO::new);
+        return new PageResultDTO<>(result, fn);
+    }
+
+    public void deleteSeller(Long id) {
+        sellerRepository.deleteById(id);
     }
 }

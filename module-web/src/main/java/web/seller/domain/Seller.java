@@ -6,11 +6,8 @@ import web.common.entity.BaseEntity;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Builder
 public class Seller extends BaseEntity {
 
     @Id
@@ -28,4 +25,16 @@ public class Seller extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     private SellerStatus sellerStatus;
+
+    @Builder
+    public Seller(Long id, String email, String password, String brandName, String brandContent, String itemContent, String imagePath, SellerStatus sellerStatus) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.brandName = brandName;
+        this.brandContent = brandContent;
+        this.itemContent = itemContent;
+        this.imagePath = imagePath;
+        this.sellerStatus = sellerStatus;
+    }
 }
