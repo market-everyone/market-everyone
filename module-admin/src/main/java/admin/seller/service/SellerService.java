@@ -30,7 +30,11 @@ public class SellerService {
     public PageResultDTO<SellerResponseDTO, Seller> getList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("SELLER_NO"));
         Page<Seller> result = sellerRepository.findApprovalSellers(pageable);
-        Function<Seller, SellerResponseDTO> fn = (entity -> new SellerResponseDTO(entity));
+        Function<Seller, SellerResponseDTO> fn = (SellerResponseDTO::new);
         return new PageResultDTO<>(result, fn);
+    }
+
+    public void deleteSeller(Long id) {
+        sellerRepository.deleteById(id);
     }
 }
