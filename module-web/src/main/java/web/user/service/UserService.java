@@ -64,6 +64,6 @@ public class UserService {
         }
 
         model.addAttribute("errors", errors);
-        return errors.size() == 0;
+        return errors.isEmpty();
     }
 }

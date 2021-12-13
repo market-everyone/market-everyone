@@ -49,7 +49,7 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute UserInfoUpdateRequest userInfoUpdateRequest,
-                                Authentication authentication) {
+                             Authentication authentication) {
         User user =AuthConverter.findCurrentUserFromAuth(authentication);
         userService.update(user.getId(), userInfoUpdateRequest);
         return "redirect:/users/mypage";

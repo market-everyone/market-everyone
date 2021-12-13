@@ -9,14 +9,10 @@ public class UserInfoUpdateRequest {
     private String nickname;
 
     private String name;
-
     private String phone;
 
     private String postcode;
-
     private String address;
-
     private String detailAddress;
-
     private String memo;
 }
