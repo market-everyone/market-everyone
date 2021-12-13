@@ -1,13 +1,28 @@
 package web.item.domain.option;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.*;
+import web.item.domain.Item;
 
+import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
 @Entity
 public class ItemOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_no")
+    private Item item;
+
+    private String name;
+
+    private int quantity;
+
+    private int price;
+
 }

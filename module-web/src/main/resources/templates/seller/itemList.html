@@ -10,27 +10,27 @@
         <h3>나의 상품 목록</h3>
         <hr>
     </div>
-    <div class="row">
+    <div class="row" th:each="item : ${items}">
         <div class="col ml-4">
             <p>상품명</p>
-            <p>남은 수량</p>
-            <p>판매 수량</p>
-            <p>상품 등록일</p>
+            <p>가격</p>
         </div>
         <div class="col">
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
+            <p th:value="${item.name}" th:text="${item.name}"></p>
+            <p th:value="${item.price}" th:text="${item.price}"></p>
         </div>
         <div class="col-6 text-right">
-            <a th:href="@{#}" class="btn btn-info btn-sm mr-3">수정</a>
-            <a th:href="@{#}" class="btn btn-danger btn-sm mr-3">삭제</a>
+            <form th:action="@{/item/itemUpdateForm(id=${item.getId()})}" method="post">
+                <button type="submit" class="btn btn-info btn-sm mr-3">수정</button>
+            </form>
+            <form th:action="@{/item/itemDelete(id=${item.getId()})}" method="post">
+                <button type="submit" class="btn btn-danger btn-sm mr-3">삭제</button>
+            </form>
         </div>
     </div>
     <div class="row text-right">
         <div class="col">
-            <a th:href="@{#}" class="btn btn-dark btn-sm mr-3">상품 등록</a>
+            <a th:href="@{/item/itemInsertForm}" class="btn btn-dark btn-sm mr-3">상품 등록</a>
         </div>
     </div>
 </div>
