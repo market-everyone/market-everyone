@@ -1,39 +1,66 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout/auth/base :: layout (~{::title}, ~{::content})">
-<head>
-  <meta charset="UTF-8">
-  <title>마켓에브리원</title>
-</head>
-<body>
-  <div th:fragment="content" class="col-lg-9 mt-5">
-    <div class="mb-5" style="margin-left: 8.25rem;">
-      <div style="font-size: 12px; color: #757575; margin-bottom: 0.5rem">SNS계정으로 간편하게 회원가입</div>
-      <a href="http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:8080/oauth2/redirect"
-         style="margin-left: 2.75rem;">
-        <img th:src="@{/images/google-logo.png}" alt="구글로그인 로고" width="65" height="65">
-      </a>
+      th:replace="layout/auth/base :: layout (~{::head}, ~{::content})">
+  <head th:fragment="head">
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <title>회원가입</title>
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" th:href="@{/css/sb-admin-2.min.css}" type="text/css">
+  </head>
+
+  <body>
+    <div th:fragment="content" class="col-lg-6 mx-auto">
+      <div class="pl-5 pt-3 pb-5 pr-5">
+        <div class="text-center">
+          <div style="font-size: 12px; color: #757575; margin-bottom: 0.5rem">
+            SNS계정으로 간편하게 회원가입
+          </div>
+          <div>
+            <a href="http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:8080/oauth2/redirect">
+              <img th:src="@{/images/google-logo.png}" alt="구글로그인 로고" width="65" height="65">
+            </a>
+          </div>
+        </div>
+        <hr>
+        <form th:action="@{/users/signup}" method="post" class="user">
+          <div class="form-group">
+            <label for="email" class="form-label font-weight-bold">이메일</label>
+            <input class="form-control form-control-user" id="email"
+                   name="email" placeholder="이메일" type="text">
+          </div>
+          <div class="form-group">
+            <label for="password" class="form-label font-weight-bold">비밀번호</label>
+            <div class="mb-2 small">영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
+            <input class="form-control form-control-user" id="password"
+                   name="password" placeholder="비밀번호" type="password">
+          </div>
+          <div class="form-group">
+            <label for="password" class="form-label font-weight-bold">비밀번호 확인</label>
+            <input class="form-control form-control-user" id="passwordConfirm"
+                   name="passwordConfirm" placeholder="비밀번호 확인" type="password">
+          </div>
+          <div class="form-group">
+            <label for="accountId" class="form-label font-weight-bold">닉네임</label>
+            <div class="mb-2 small">다른 유저와 겹치지 않는 닉네임을 입력해주세요.</div>
+            <input class="form-control form-control-user" id="accountId"
+                   name="accountId" placeholder="닉네임" type="text">
+          </div>
+          <button type="submit" class="btn btn-primary btn-user btn-block mt-5">회원가입하기</button>
+        </form>
+
+        <div class="text-center mt-4">
+          <span>이미 아이디가 있으신가요?</span>
+          <a href="/users/login">로그인</a>
+        </div>
+      </div>
     </div>
-    <form th:action="@{/users/signup}" method="post">
-      <div class="mb-4">
-        <label style="font-size: 15px; font-weight: bolder">이메일</label>
-        <input type="email" class="form-control form-control-lg" name="email" id="email" placeholder="이메일"
-               style="width: 26rem; height: 3rem; font-size: 16px;">
-      </div>
-      <div class="mb-4">
-        <label style="font-size: 15px; font-weight: bolder">비밀번호</label>
-        <div style="font-size: 13px; color: #757575; margin-bottom: 0.5rem">영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
-        <input type="password" class="form-control form-control-lg" name="password" id="password" placeholder="비밀번호"
-               style="width: 26rem; height: 3rem; font-size: 16px;">
-      </div>
-      <div class="mb-5">
-        <label style="font-size: 15px; font-weight: bolder">닉네임</label>
-        <div style="font-size: 13px; color: #757575; margin-bottom: 0.5rem">다른 유저와 겹치지 않는 닉네임을 입력해주세요. (2~15자)</div>
-        <input type="text" class="form-control form-control-lg" name="accountId" id="accountId" placeholder="닉네임 (2~15자)"
-               style="width: 26rem; height: 3rem; font-size: 16px;">
-      </div>
-      <button type="submit" class="btn btn-success" style="width: 26rem; height: 3rem;">회원가입하기</button>
-    </form>
-  </div>
-</body>
+  </body>
 </html>
