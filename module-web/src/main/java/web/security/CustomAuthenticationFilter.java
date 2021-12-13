@@ -9,6 +9,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         userEmail = (userEmail != null) ? request.getParameter("email").trim() : "";
         password = (password != null) ? request.getParameter("password").trim() : "";
+
+        request.setAttribute("email", userEmail);
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userEmail, password);
@@ -50,7 +53,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                                               HttpServletResponse response,
                                               AuthenticationException failed)
             throws IOException, ServletException {
-        response.sendRedirect("/users/login/error");
+        String email = (String) request.getAttribute("email");
+
+        response.sendRedirect("/users/login/error?email="+email);
     }
 
 }

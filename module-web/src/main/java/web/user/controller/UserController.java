@@ -43,8 +43,8 @@ public class UserController {
 
     @GetMapping("/login/error")
     public String loginError(Model model) {
-        model.addAttribute("loginError", "true");
-        return "login";
+        model.addAttribute("error", "true");
+        return "user/login";
     }
 
     /* 페이지 */
