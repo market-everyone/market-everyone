@@ -26,6 +26,10 @@ public class Seller extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private SellerStatus sellerStatus;
 
+    public void approved() {
+        this.sellerStatus = SellerStatus.APPROVAL;
+    }
+
     @Builder
     public Seller(Long id, String email, String password, String brandName, String brandContent, String itemContent, String imagePath, SellerStatus sellerStatus) {
         this.id = id;

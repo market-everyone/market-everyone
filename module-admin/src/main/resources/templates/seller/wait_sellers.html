@@ -9,8 +9,8 @@
 <div class="container-fluid" th:fragment="content">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">판매자 목록</h1>
-    <p class="mb-4">해당 페이지에서 판매자들을 삭제/관리할 수 있습니다.</p>
+    <h1 th:text="#{page.waitsellers}" class="h3 mb-2 text-gray-800">판매자 등록 요청</h1>
+    <p class="mb-4">해당 페이지에서 판매자 등록요청을 심사할 수 있습니다.</p>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -25,22 +25,16 @@
                         <th>번호</th>
                         <th>브랜드명</th>
                         <th>작성자</th>
-                        <th>등록 날짜</th>
-                        <th>관리</th>
+                        <th>요청 날짜</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="seller, sellerStat : ${result.dtoList}">
-                        <td th:text="${sellerStat.count}"></td>
-                        <td th:text="${seller.brandName}"></td>
+                    <tr th:each="seller : ${result.dtoList}">
+                        <td th:text="${seller.id}"></td>
+                        <td><a th:href="@{/seller/wait-sellers/{sellerId}(sellerId=${seller.id})}"
+                               th:text="${seller.brandName}"></a></td>
                         <td th:text="${seller.brandContent}"></td>
                         <td th:text="${seller.createDate}"></td>
-                        <td>
-                            <form th:action="@{/seller/delete}" method="post">
-                                <input type="hidden" name="id" th:value="${seller.id}">
-                                <button class="btn btn-danger ml-2" type="submit">Delete</button>
-                            </form>
-                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -48,18 +42,18 @@
                 <ul class="pagination h-100 justify-content-center align-items-center">
                     <li class="page-item" th:if="${result.prev}">
                         <a class="page-link"
-                           tabindex="-1" th:href="@{/seller/list(page=${result.start - 1})}">Previous</a>
+                           tabindex="-1" th:href="@{/seller/wait-sellers(page=${result.start - 1})}">Previous</a>
                     </li>
 
                     <li th:class=" 'page-item ' + ${result.page == page?'active':''}"
                         th:each="page : ${result.pageList}">
                         <a class="page-link"
-                           th:href="@{/seller/list(page = ${page})}">[[${page}]]</a>
+                           th:href="@{/seller/wait-sellers(page = ${page})}">[[${page}]]</a>
                     </li>
 
                     <li class="page-item" th:if="${result.next}">
                         <a class="page-link"
-                           th:href="@{/seller/list(page = ${result.end + 1})}">Next</a>
+                           th:href="@{/seller/wait-sellers(page = ${result.end + 1})}">Next</a>
                     </li>
                 </ul>
             </div>

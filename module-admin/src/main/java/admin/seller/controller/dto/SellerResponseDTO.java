@@ -1,6 +1,6 @@
 package admin.seller.controller.dto;
 
-import lombok.*;
+import lombok.Getter;
 import web.seller.domain.Seller;
 import web.seller.domain.SellerStatus;
 
@@ -11,16 +11,16 @@ import java.util.Optional;
 @Getter
 public class SellerResponseDTO {
 
-    private Long id;
-    private String email;
-    private String password;
-    private String brandName;
-    private String brandContent;
-    private String itemContent;
-    private String imagePath;
-    private SellerStatus sellerStatus;
-    private String createDate;
-    private String modifiedDate;
+    private final Long id;
+    private final String email;
+    private final String password;
+    private final String brandName;
+    private final String brandContent;
+    private final String itemContent;
+    private final String imagePath;
+    private final SellerStatus sellerStatus;
+    private final String createDate;
+    private final String modifiedDate;
 
     public SellerResponseDTO(Seller entity) {
         id = entity.getId();
@@ -35,7 +35,7 @@ public class SellerResponseDTO {
         modifiedDate = toStringDateTime(entity.getModifiedDate());
     }
 
-    private String toStringDateTime(LocalDateTime localDateTime){
+    private String toStringDateTime(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return Optional.ofNullable(localDateTime)
                 .map(formatter::format)
