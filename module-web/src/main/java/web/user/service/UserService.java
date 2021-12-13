@@ -9,7 +9,6 @@ import web.exception.user.*;
 import web.user.controller.dto.request.UserInfoUpdateRequest;
 import web.user.controller.dto.request.UserSignUpRequest;
 import web.user.controller.dto.response.UserInfoResponse;
-import web.user.domain.Address;
 import web.user.domain.User;
 import web.user.domain.UserRepository;
 
