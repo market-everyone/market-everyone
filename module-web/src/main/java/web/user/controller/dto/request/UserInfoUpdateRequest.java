@@ -6,17 +6,13 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserInfoUpdateRequest {
-    private String accountId;
+    private String nickname;
 
     private String name;
-
     private String phone;
 
     private String postcode;
-
     private String address;
-
     private String detailAddress;
-
     private String memo;
 }

@@ -58,7 +58,7 @@ public class Oauth2UserPrincipalService extends DefaultOAuth2UserService {
 
     private User registerNewUser(OAuth2UserInfo oAuth2UserInfo) {
         User user = User.builder()
-                .accountId("user#" + oAuth2UserInfo.getProviderId())
+                .nickname("user#" + oAuth2UserInfo.getProviderId())
                 .email(oAuth2UserInfo.getEmail())
                 .password(passwordEncoder.encode(oauthSecretPassword))
                 .role(Role.ROLE_USER)
