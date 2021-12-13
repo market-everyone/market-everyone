@@ -8,7 +8,7 @@ import web.user.domain.User;
 @NoArgsConstructor
 @Getter
 public class UserInfoResponse {
-    private String accountId;
+    private String nickname;
 
     private String email;
 
@@ -26,7 +26,7 @@ public class UserInfoResponse {
 
     public static UserInfoResponse of(User user) {
         UserInfoResponse userInfoResponse = UserInfoResponse.builder()
-                .accountId(user.getAccountId())
+                .nickname(user.getNickname())
                 .email(user.getEmail())
                 .point(user.getPoint())
                 .name(user.getName())

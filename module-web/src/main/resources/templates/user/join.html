@@ -30,30 +30,42 @@
           </div>
         </div>
         <hr>
-        <form th:action="@{/users/signup}" method="post" class="user">
+        <form th:action="@{/users/signup}" th:object="${userSignUpRequest}" method="post" class="user">
+
           <div class="form-group">
             <label for="email" class="form-label font-weight-bold">이메일</label>
-            <input class="form-control form-control-user" id="email"
+            <input th:field="*{email}" class="form-control form-control-user" id="email"
                    name="email" placeholder="이메일" type="text">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="small text-danger mt-1 ml-3"></p>
+            <p th:if="${errors?.containsKey('emailError')}" class="small text-danger mt-1 ml-3">이미 존재하는 회원의 이메일입니다.</p>
           </div>
+
           <div class="form-group">
-            <label for="password" class="form-label font-weight-bold">비밀번호</label>
+            <label class="form-label font-weight-bold">비밀번호</label>
             <div class="mb-2 small">영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
-            <input class="form-control form-control-user" id="password"
-                   name="password" placeholder="비밀번호" type="password">
+            <input th:value="*{password}" class="form-control form-control-user" name="password"
+                  placeholder="비밀번호" type="password" >
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="small text-danger mt-1 ml-3"></p>
           </div>
+
           <div class="form-group">
-            <label for="password" class="form-label font-weight-bold">비밀번호 확인</label>
-            <input class="form-control form-control-user" id="passwordConfirm"
-                   name="passwordConfirm" placeholder="비밀번호 확인" type="password">
+            <label class="form-label font-weight-bold">비밀번호 확인</label>
+            <input th:value="*{passwordConfirm}" class="form-control form-control-user" name="passwordConfirm"
+                   placeholder="비밀번호 확인" type="password" >
+            <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" class="small text-danger mt-1 ml-3"></p>
+            <p th:if="${errors?.containsKey('passwordError')}" class="small text-danger mt-1 ml-3">비밀번호가 일치하지 않습니다.</p>
           </div>
+
           <div class="form-group">
-            <label for="accountId" class="form-label font-weight-bold">닉네임</label>
+            <label class="form-label font-weight-bold">닉네임</label>
             <div class="mb-2 small">다른 유저와 겹치지 않는 닉네임을 입력해주세요.</div>
-            <input class="form-control form-control-user" id="accountId"
-                   name="accountId" placeholder="닉네임" type="text">
+            <input th:field="*{nickname}" class="form-control form-control-user"
+                   name="nickname" placeholder="닉네임" type="text">
+            <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="small text-danger mt-1 ml-3"></p>
+            <p th:if="${errors?.containsKey('nicknameError')}" class="small text-danger mt-1 ml-3">이미 존재하는 회원의 닉네임입니다.</p>
           </div>
-          <button type="submit" class="btn btn-primary btn-user btn-block mt-5">회원가입하기</button>
+
+          <button type="submit" class="btn btn-primary btn-user btn-block mt-4">회원가입하기</button>
         </form>
 
         <div class="text-center mt-4">

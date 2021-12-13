@@ -1,4 +1,4 @@
-package web.common;
+package web.common.auth;
 
 import org.springframework.security.core.Authentication;
 import web.security.UserPrincipal;

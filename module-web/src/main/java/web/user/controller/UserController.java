@@ -4,13 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import web.common.AuthConverter;
+import web.common.auth.AuthConverter;
 import web.user.controller.dto.request.UserInfoUpdateRequest;
 import web.user.controller.dto.request.UserSignUpRequest;
 import web.user.controller.dto.response.UserInfoResponse;
 import web.user.domain.User;
 import web.user.service.UserService;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -20,7 +23,18 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public String saveUser(@ModelAttribute UserSignUpRequest userSignUpRequest) {
+    public String saveUser(@Valid @ModelAttribute(name = "userSignUpRequest") UserSignUpRequest userSignUpRequest,
+                           BindingResult bindingResult,
+                           Model model) {
+        if (bindingResult.hasErrors()) {
+            userService.checkUserSignUpRequestValidation(userSignUpRequest, model);
+            return "user/join";
+        }
+
+        if (!userService.checkUserSignUpRequestValidation(userSignUpRequest, model)) {
+            return "user/join";
+        }
+
         userService.save(userSignUpRequest);
         return "redirect:login";
     }
@@ -55,7 +69,7 @@ public class UserController {
     }
 
     @GetMapping("/join")
-    public String signUpPage() {
+    public String signUpPage(@ModelAttribute UserSignUpRequest userSignUpRequest) {
         return "user/join";
     }
 

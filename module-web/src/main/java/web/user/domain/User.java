@@ -18,7 +18,7 @@ public class User {
 
     private String email;
 
-    private String accountId;
+    private String nickname;
 
     private String password;
 
@@ -40,7 +40,7 @@ public class User {
     private String providerId;
 
     public void update(UserInfoUpdateRequest request) {
-        accountId = request.getAccountId();
+        nickname = request.getNickname();
         address = new Address(
                 request.getPostcode(),
                 request.getAddress(),
