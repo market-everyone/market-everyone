@@ -19,3 +19,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+task copyConfigSettings(type: Copy) {
+    from '../security/'
+    into 'src/main/resources/'
+}
