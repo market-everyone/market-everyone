@@ -1,14 +1,17 @@
 package web.item.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.item.controller.dto.request.ItemRequest;
+import web.item.controller.dto.response.ItemResponse;
 import web.item.domain.Item;
 import web.item.domain.ItemRepository;
 import web.item.domain.category.Category;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -44,5 +47,14 @@ public class ItemService {
     @Transactional
     public void delete(Item item) {
         itemRepository.delete(item);
+    }
+
+    @Transactional
+    public List<ItemResponse> findPagesBy(Long from, int size) {
+        PageRequest pageRequest = PageRequest.of(0, size);
+        return itemRepository.findByIdGreaterThanEqualOrderById(from, pageRequest)
+                .stream()
+                .map(ItemResponse::of)
+                .collect(Collectors.toList());
     }
 }

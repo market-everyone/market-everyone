@@ -17,41 +17,41 @@
 
   <body>
     <div th:fragment="content" class="col-lg-9 mr-5">
-      <h3>회원정보수정</h3>
+      <h3 class="text-gray-900 font-weight-bold">회원정보수정</h3>
       <br/>
-      <B class="mb-2 fs-5">기본 정보</B>
+      <B class="mb-2 text-gray-900">기본 정보</B>
       <hr>
       <form th:action="@{/users/update}" method="post" class="user">
         <div class="form-group col-auto">
-          <label for="email" class="col-form-label font-weight-bold">이메일</label>
+          <label for="email" class="col-form-label font-weight-bold text-gray-700">이메일</label>
           <input class="form-control form-control-user" id="email"
                  type="text" th:value="${userInfo.getEmail()}" readonly>
         </div>
         <div class="form-group col-auto">
-          <label for="nickname" class="col-form-label font-weight-bold">닉네임</label>
+          <label for="nickname" class="col-form-label font-weight-bold text-gray-700">닉네임</label>
           <input class="form-control form-control-user" id="nickname"
                  name="nickname" placeholder="닉네임" type="text" th:value="${userInfo.getNickname()}">
         </div>
         <div class="form-group">
-          <span class="col-auto font-weight-bold">내 포인트</span>
+          <span class="col-auto font-weight-bold text-gray-700">내 포인트</span>
           <span class="col-auto" th:text="${userInfo.getPoint()} + 포인트"> 0 </span>
         </div>
         <br>
 
-        <B class="mb-2 fs-4x">배송지 정보</B>
+        <B class="mb-2 text-gray-900">배송지 정보</B>
         <hr>
         <div class="form-group col-auto">
-          <label class="col-form-label font-weight-bold">수령인</label>
+          <label class="col-form-label font-weight-bold text-gray-700">수령인</label>
           <input type="text" th:value="${userInfo.getName()}"
                  class="form-control form-control-user" name="name" id="name">
         </div>
         <div class="form-group col-auto">
-          <label class="col-form-label font-weight-bold">연락처</label>
+          <label class="col-form-label font-weight-bold text-gray-700">연락처</label>
           <input type="text" th:value="${userInfo.getPhone()}"
                  class="form-control form-control-user" name="phone" id="phone">
         </div>
         <div class="form-group col-auto">
-          <label class="col-form-label font-weight-bold">주소</label>
+          <label class="col-form-label font-weight-bold text-gray-700">주소</label>
           <div class="row col-auto">
             <input class="w-50 form-control form-control-user col-auto" th:value="${userInfo.getPostcode()}"
                    type="text" id="postcode" name="postcode" readonly>
@@ -63,7 +63,7 @@
                  type="text" id="detailAddress" name="detailAddress" placeholder="상세주소 입력">
         </div>
         <div class="form-group col-auto">
-          <label class="col-form-label font-weight-bold">배송메모</label>
+          <label class="col-form-label font-weight-bold text-gray-700">배송메모</label>
           <input type="text" th:value="${userInfo.getMemo()}" class="form-control form-control-user" name="memo" id="memo">
         </div>
         <div class="form-group col-auto">
