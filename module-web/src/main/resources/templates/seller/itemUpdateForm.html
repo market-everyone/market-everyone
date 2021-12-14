@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout (~{::title}, ~{::content})">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="content" class="col-lg-9 pt-5">
+    <form th:action="@{/item/itemUpdate}" method="post" enctype="multipart/form-data" id="itemUpdateForm">
+        <input type="hidden" th:value="${item.id}" name="itemId">
+        <div class="row">
+            <div class="col-6">
+                <img th:src="${item.imagePath}" width="400px" height="400px">
+            </div>
+            <div class="col-6">
+                <table class="table">
+                    <tr>
+                        <th scope="row">상품명</th>
+                        <td><input type="text" name="name" id="name" th:value="${item.name}" placeholder="상품명을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">상품 카테고리</th>
+                        <td>
+                            <select class="custom-select" aria-label="select" name="categoryName">
+                                <option th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}" th:selected="${category.id==item.category.id}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">배송비</th>
+                        <td>3000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">기본 가격</th>
+                        <td><input type="number" name="price" th:value="${item.price}" placeholder="상품가격을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">수량</th>
+                        <td><input type="number" name="quantity" th:value="${item.getQuantity()}" placeholder="상품수량을 기입하세요."></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="itemOption">
+            <div class="col">
+                <h2>옵션(선택)</h2>
+            </div>
+        </div>
+        <span id="addOption"> 옵션 추가 </span>
+        <span id="delOption"> 옵션 삭제 </span>
+        <div class="row">
+            <table id="options" class="table">
+                <tr>
+                    <th>옵션명</th>
+                    <th>추가 금액</th>
+                    <th>수량</th>
+                </tr>
+                <tr th:if="${#lists.size(options) > 0}" th:each="i : ${#numbers.sequence(0, #lists.size(options) - 1)}">
+                    <td><input type="text" th:value="${options.get(i).name}" th:name="|itemOptionList[${i}].name|"></td>
+                    <td><input type="number" th:value="${options.get(i).price}" th:name="|itemOptionList[${i}].price|"></td>
+                    <td><input type="number" th:value="${options.get(i).quantity}" th:name="|itemOptionList[${i}].quantity|"></td>
+                </tr>
+            </table>
+        </div>
+        <hr>
+        <div class="row" id="itemExplain">
+            <div class="col">
+                <h2>상품 설명</h2>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="writeExplain">
+            <div class="col">
+                <textarea id="editor" name="content" th:text="${item.content}" placeholder="This is some sample content."></textarea>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="itemInformation">
+            <div class="col">
+                <h2>작품 정보제공 고시</h2>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="sellerInformation">
+            <div class="col">
+                <h2>판매자 정보</h2>
+            </div>
+        </div>
+        <div class="row" id="writeSeller">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th scope="row">대표자명</th>
+                        <td>박관우</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">이메일</th>
+                        <td>pgw4712@icloud.com</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">전화번호</th>
+                        <td>010-xxxx-xxxx</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="deliveryInformation">
+            <div class="col">
+                <h2>배송 / 교환 / 환불</h2>
+            </div>
+        </div>
+        <div class="row" id="writeDelivery">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th scope="row">배송</th>
+                        <td><input type="text" name="delivery" th:value="${item.delivery}" placeholder="배송 규정을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">교환</th>
+                        <td><input type="text" name="exchange" th:value="${item.exchange}" placeholder="교환 규정을 기입하세요."></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">환불</th>
+                        <td><input type="text" name="refund" th:value="${item.refund}" placeholder="환불 규정을 기입하세요."></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-end">
+            <input type="submit" th:value="수정">
+            <input type="button" th:value="취소" onclick="location.href='/item/itemList'">
+        </div>
+    </form>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/js/ckeditor/ckeditor.js}"></script>
+    <script>CKEDITOR.replace('editor',
+        {
+            filebrowserImageUploadUrl : '/item/itemInsert?type=Images'
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $("span[id='addOption']").click(function () {
+
+                var trCnt = $('#options tr').length;
+
+                $('#options tbody').append(
+                    '<tr>' +
+                    '<td><input type="text" name="itemOptionList[' + (trCnt-1) + '].name"></td>' +
+                    '<td><input type="number" name="itemOptionList[' + (trCnt-1) + '].price"></td>' +
+                    '<td><input type="number" name="itemOptionList[' + (trCnt-1) + '].quantity"></td>' +
+                    '</tr>');
+            });
+
+            $("span[id='delOption']").click(function () {
+
+                var trCnt = $('#options tr').length;
+                if (trCnt > 1) {
+                    $("#options tr:last").remove();
+                } else {
+                    return false;
+                }
+            });
+
+            $("input[type=submit]").click(function(){
+
+                var isRight = true;
+                $("#itemUpdateForm").find("input").each(function(){
+
+                    if ($(this).val().trim() === '') {
+                        alert($(this).attr("name")+" 항목을 입력하세요.");
+                        return isRight = false;
+                    }
+                });
+
+                if (CKEDITOR.instances.editor.getData() === '') {
+                    alert("상품 설명을 작성해주세요");
+                    return isRight = false;
+                }
+
+                return isRight;
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

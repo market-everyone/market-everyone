@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/sc-base :: layout (~{::title}, ~{::content})">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-메인</title>
+</head>
+<div th:fragment="content" class="col-lg-9 mt-5">
+    <select class="w-75 form-control form-control-lg">
+        <option selected>질문 카테고리</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+    </select>
+
+    <div>
+        <input class="mt-4 w-75 form-control form-control-lg" type="text" placeholder="제목">
+    </div>
+
+    <div>
+        <textarea class="mt-4 w-75 h-25 form-control form-control-lg" rows="10" placeholder="내용"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-user btn-block mt-4 w-75 btn-lg">질문 등록하기</button>
+</div>
+
+</html>

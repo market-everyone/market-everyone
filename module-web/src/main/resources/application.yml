@@ -1,13 +1,6 @@
 spring:
   profiles:
-    include:
-      - auth
-
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
+    include: auth, datasource
 
   h2:
     console:
@@ -16,5 +9,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+      naming:
+        physical-strategy: web.common.strategy.UpperCaseNamingStrategy
     show-sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
