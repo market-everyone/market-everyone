@@ -11,10 +11,18 @@ insert into CATEGORY(NAME, IMAGE_PATH) values('수납/정리', 'https://image.oh
 insert into CATEGORY(NAME, IMAGE_PATH) values('생활용품', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/163609843911228804.png?gif=1&w=180&h=180&c=c');
 insert into CATEGORY(NAME, IMAGE_PATH) values('생필품', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/163575474448469686.png?gif=1&w=180&h=180&c=c');
 insert into CATEGORY(NAME, IMAGE_PATH) values('공구/DIY', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823230480918647.png?gif=1&w=180&h=180&c=c');
-insert into CATEGORY(NAME, IMAGE_PATH) values('인테리어시공', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823230908544036.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('인테리어', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823230908544036.png?gif=1&w=180&h=180&c=c');
 insert into CATEGORY(NAME, IMAGE_PATH) values('반려동물', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823231401891024.png?gif=1&w=180&h=180&c=c');
 insert into CATEGORY(NAME, IMAGE_PATH) values('캠핑용품', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823242317048198.png?gif=1&w=180&h=180&c=c');
 insert into CATEGORY(NAME, IMAGE_PATH) values('실내운동', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823231949249287.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('카테고리', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/163654148296283533.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('카테고리', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/163572945028172903.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('카테고리', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823224728615402.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('카테고리', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823225115177697.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('카테고리', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823225665741013.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('카테고리', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823228178967968.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('카테고리', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/163609843911228804.png?gif=1&w=180&h=180&c=c');
+insert into CATEGORY(NAME, IMAGE_PATH) values('카테고리', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/category/store_home_categories/162823231949249287.png?gif=1&w=180&h=180&c=c');
 
 ---- ITEM
 insert into ITEM(NAME, PRICE, QUANTITY, CONTENT, IMAGE_PATH) values('[5%쿠폰] (한파용/헝가리산/거위솜털90%) 엑스트라 웜 마자르 구스이불 S/Q/K' ,299000, 1000, '내용', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/1614653935_114810_13.jpg?gif=1&w=360&h=360&c=c&q=0.8');

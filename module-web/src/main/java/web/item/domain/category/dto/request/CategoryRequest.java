@@ -15,7 +15,7 @@ public class CategoryRequest {
 
     public Category toCategory(String categoryName) {
         return Category.builder()
-                .categoryName(categoryName)
+                .name(categoryName)
                 .build();
     }
 

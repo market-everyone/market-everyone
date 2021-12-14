@@ -43,87 +43,54 @@
             </a>
         </div>
 
-        <h4 class="font-weight-bold text-dark">전체 카테고리</h4>
-        <hr>
+        <h4 class="font-weight-bold text-gray-900">전체 카테고리</h4><hr>
         <div class="row mb-5" id="categoryList">
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="card h-100">
-                    <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                    <div class="card-body">
-                        <span class="small">가구/인테리어</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="card h-100">
-                    <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                    <div class="card-body">
-                        <span class="small">디지털기기</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="card h-100">
-                    <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                    <div class="card-body">
-                        <span class="small">생활용품</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="card h-100">
-                    <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                    <div class="card-body">
-                        <span class="small">반려동물용품</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="card h-100">
-                    <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                    <div class="card-body">
-                        <span class="small">도서/음반/티켓</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="card h-100">
-                    <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                    <div class="card-body">
-                        <span class="small">패션/잡화</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="card h-100">
-                    <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                    <div class="card-body">
-                        <span class="small">뷰티/미용</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="card h-100">
-                    <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                    <div class="card-body">
-                        <span class="small">기타</span>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
-        <h4 class="font-weight-bold text-dark">오늘의 상품</h4>
-        <hr>
+        <h4 class="font-weight-bold text-gray-900">오늘의 상품</h4><hr>
         <div class="row" id="itemList">
 
         </div>
+
     </div>
 </html>
 
 <script>
+    $(async function () {
+        let response = '';
+
+        await $.get(`/api/categories`, result => {
+            response = result;
+        });
+
+        $("#categoryList").append(addCategoryTemplate(response));
+
+        function addCategoryTemplate(categories) {
+            let template = '';
+
+            categories.forEach(category => {
+                template += `
+                    <div class="col-lg-1 col-md-1 mb-3 text-center">
+                        <div class="h-75">
+                            <a href="/categories/${category.id}"><img class="card-img-top" src="${category.imagePath}" alt=""></a>
+                            <div class="card-body">
+                                <span class="small text-dark font-weight-bolder">${category.name}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            })
+
+            return template;
+        }
+    });
+
     $(function() {
         const size = 12;
         let from = 0;
+
+        loadMoreItems();
 
         $(window).scroll(() => {
             if ($(window).scrollTop() + $(window).height() === $(document).height()) {
@@ -137,24 +104,25 @@
                 response = result;
             })
 
-            $("#itemList").append(addTemplate(response));
+            $("#itemList").append(addItemTemplate(response));
             from += size;
         }
 
-        function addTemplate(items) {
+        function addItemTemplate(items) {
             let template = "";
             items.forEach((item) => {
                 item.price = item.price.toLocaleString();
-                template +=
-                    `<div class="col-lg-3 col-md-6 mb-5">
-                    <div class="card h-100">
-                        <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
-                        <div class="card-body">
-                            <div class="small text-gray-900">${item.name}</div>
-                            <div class="mt-1 fs-5x text-dark font-weight-bold">${item.price} 원</div>
+                template += `
+                    <div class="col-lg-3 col-md-6 mb-5">
+                        <div class="card h-100">
+                            <a href="/item/${item.id}"><img class="card-img-top" src="${item.imagePath}" alt=""></a>
+                            <div class="card-body">
+                                <div class="small text-gray-900">${item.name}</div>
+                                <div class="mt-1 fs-5x text-dark font-weight-bold">${item.price} 원</div>
+                            </div>
                         </div>
                     </div>
-                </div>`;
+                `;
             });
 
             return template;
