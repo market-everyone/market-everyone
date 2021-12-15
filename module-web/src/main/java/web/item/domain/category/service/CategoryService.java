@@ -29,7 +29,12 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    public Category findById(String name) {
+    public Category findByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    public CategoryResponse findById(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow();
+        return CategoryResponse.of(category);
     }
 }

@@ -6,7 +6,7 @@
         <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
         <meta content="" name="description">
         <meta content="" name="author">
-        <title>마켓에브리원</title>
+        <title>마켓에브리원 | Market For Everyone</title>
         <!-- Custom fonts for this template-->
         <link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -16,7 +16,7 @@
     </head>
 
     <div th:fragment="content" class="col-lg-auto">
-        <div id="carouselExampleIndicators" class="carousel slide my-5" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide my-5" style="height: 17rem" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -24,13 +24,13 @@
             </ol>
             <div class="carousel-inner" role="listbox">
                 <div class="carousel-item active">
-                    <img class="d-block img-fluid" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/store/banners/store_home_banners/163849407986125363.png?gif=1&w=2560&q=100" alt="First slide">
+                    <img class="d-block img-fluid" style="height: 17rem" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/store/banners/store_home_banners/163849407986125363.png?gif=1&w=2560&q=100" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block img-fluid" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/store/banners/store_home_banners/163851706347122774.png?gif=1&w=2560&q=100" alt="Second slide">
+                    <img class="d-block img-fluid" style="height: 17rem" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/store/banners/store_home_banners/163851706347122774.png?gif=1&w=2560&q=100" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block img-fluid" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/store/banners/store_home_banners/163852842549142346.png?gif=1&w=2560&q=100" alt="Third slide">
+                    <img class="d-block img-fluid" style="height: 17rem" src="https://image.ohou.se/i/bucketplace-v2-development/uploads/store/banners/store_home_banners/163852842549142346.png?gif=1&w=2560&q=100" alt="Third slide">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -43,12 +43,14 @@
             </a>
         </div>
 
-        <h4 class="font-weight-bold text-gray-900">전체 카테고리</h4><hr>
+        <h4 class="font-weight-bold text-gray-900">전체 카테고리</h4>
+        <hr>
         <div class="row mb-5" id="categoryList">
 
         </div>
 
-        <h4 class="font-weight-bold text-gray-900">오늘의 상품</h4><hr>
+        <h4 class="font-weight-bold text-gray-900">오늘의 상품</h4>
+        <hr class="mb-4">
         <div class="row" id="itemList">
 
         </div>
@@ -71,7 +73,7 @@
 
             categories.forEach(category => {
                 template += `
-                    <div class="col-lg-1 col-md-1 mb-3 text-center">
+                    <div class="col-lg-1 col-md-1 text-center">
                         <div class="h-75">
                             <a href="/categories/${category.id}"><img class="card-img-top" src="${category.imagePath}" alt=""></a>
                             <div class="card-body">
