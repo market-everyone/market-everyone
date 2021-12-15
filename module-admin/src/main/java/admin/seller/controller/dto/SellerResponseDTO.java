@@ -1,24 +1,26 @@
 package admin.seller.controller.dto;
 
-import lombok.*;
+import lombok.Getter;
 import web.seller.domain.Seller;
 import web.seller.domain.SellerStatus;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Getter
 public class SellerResponseDTO {
 
-    private Long id;
-    private String email;
-    private String password;
-    private String brandName;
-    private String brandContent;
-    private String itemContent;
-    private String imagePath;
-    private SellerStatus sellerStatus;
-    private LocalDateTime createDate;
-    private LocalDateTime modifiedDate;
+    private final Long id;
+    private final String email;
+    private final String password;
+    private final String brandName;
+    private final String brandContent;
+    private final String itemContent;
+    private final String imagePath;
+    private final SellerStatus sellerStatus;
+    private final String createDate;
+    private final String modifiedDate;
 
     public SellerResponseDTO(Seller entity) {
         id = entity.getId();
@@ -29,7 +31,14 @@ public class SellerResponseDTO {
         itemContent = entity.getItemContent();
         imagePath = entity.getImagePath();
         sellerStatus = entity.getSellerStatus();
-        createDate = entity.getCreateDate();
-        modifiedDate = entity.getModifiedDate();
+        createDate = toStringDateTime(entity.getCreateDate());
+        modifiedDate = toStringDateTime(entity.getModifiedDate());
+    }
+
+    private String toStringDateTime(LocalDateTime localDateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return Optional.ofNullable(localDateTime)
+                .map(formatter::format)
+                .orElse("");
     }
 }

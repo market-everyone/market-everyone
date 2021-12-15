@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static web.seller.domain.QSeller.seller;
-import static web.seller.domain.SellerStatus.APPROVAL;
 
 @RequiredArgsConstructor
 @Transactional
@@ -20,9 +19,9 @@ public class SellerRepositoryImpl implements SellerRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<Seller> findApprovalSellers(Pageable pageable) {
+    public Page<Seller> findApprovalSellers(SellerStatus status, Pageable pageable) {
         QueryResults<Seller> result = queryFactory.selectFrom(seller)
-                .where(seller.sellerStatus.eq(APPROVAL))
+                .where(seller.sellerStatus.eq(status))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
