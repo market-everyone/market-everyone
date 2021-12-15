@@ -11,16 +11,16 @@ import java.util.Optional;
 @Getter
 public class SellerResponseDTO {
 
-    private final Long id;
-    private final String email;
-    private final String password;
-    private final String brandName;
-    private final String brandContent;
-    private final String itemContent;
-    private final String imagePath;
-    private final SellerStatus sellerStatus;
-    private final String createDate;
-    private final String modifiedDate;
+    private Long id;
+    private String email;
+    private String password;
+    private String brandName;
+    private String brandContent;
+    private String itemContent;
+    private String imagePath;
+    private SellerStatus sellerStatus;
+    private String createDate;
+    private String modifiedDate;
 
     public SellerResponseDTO(Seller entity) {
         id = entity.getId();
