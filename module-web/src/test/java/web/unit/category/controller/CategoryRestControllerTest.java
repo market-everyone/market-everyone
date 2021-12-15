@@ -1,4 +1,4 @@
-package web.category.controller;
+package web.unit.category.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import web.common.TestWithSecurity;
+import web.unit.common.TestWithSecurity;
 import web.item.domain.category.controller.CategoryRestController;
 import web.item.domain.category.dto.response.CategoryResponse;
 import web.item.domain.category.service.CategoryService;

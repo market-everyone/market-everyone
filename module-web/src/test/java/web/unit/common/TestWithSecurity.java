@@ -1,4 +1,4 @@
-package web.common;
+package web.unit.common;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.mock.mockito.MockBean;

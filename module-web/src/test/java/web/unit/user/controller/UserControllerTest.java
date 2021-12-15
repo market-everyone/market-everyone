@@ -1,6 +1,5 @@
-package web.user.controller;
+package web.unit.user.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import web.common.TestWithSecurity;
+import web.unit.common.TestWithSecurity;
+import web.user.controller.UserController;
 import web.user.controller.dto.request.UserSignUpRequest;
 import web.user.service.UserService;
 

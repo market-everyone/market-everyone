@@ -1,4 +1,4 @@
-package web.category.service;
+package web.unit.category.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package web.item.controller;
+package web.unit.item.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import web.common.TestWithSecurity;
+import web.unit.common.TestWithSecurity;
+import web.item.controller.ItemRestController;
 import web.item.controller.dto.response.ItemResponse;
 import web.item.service.ItemService;
 

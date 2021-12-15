@@ -1,4 +1,4 @@
-package web.item.service;
+package web.unit.item.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import web.item.controller.dto.response.ItemResponse;
 import web.item.domain.Item;
 import web.item.domain.ItemRepository;
 import web.item.domain.category.Category;
+import web.item.service.ItemService;
 
 import java.util.List;
 import java.util.stream.Collectors;
