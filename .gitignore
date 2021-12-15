@@ -38,3 +38,5 @@ out/
 
 application-auth.yml
 application-datasource.yml
+
+.DS_Store

@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import web.common.util.ImageUtil;
 import web.item.controller.dto.request.ItemRequest;
+import web.item.controller.dto.response.ItemResponse;
 import web.item.domain.Item;
 import web.item.domain.category.Category;
 import web.item.domain.category.dto.request.CategoryRequest;
+import web.item.domain.category.dto.response.CategoryResponse;
 import web.item.domain.category.service.CategoryService;
 import web.item.domain.option.ItemOption;
 import web.item.domain.option.dto.request.ItemOptionListRequest;
@@ -19,7 +21,6 @@ import web.item.service.ItemService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.List;
 
 
@@ -50,7 +51,7 @@ public class ItemController {
         ImageUtil imageUtil = new ImageUtil();
         String imagePath = imageUtil.uploadImage(req, res, file);
 
-        Category category = categoryService.findById(categoryRequest.getCategoryName());
+        Category category = categoryService.findByName(categoryRequest.getCategoryName());
         Long item_id = itemService.save(itemInsertRequest, category, imagePath);
         if (itemOptionListRequest.getItemOptionList() != null) {
             optionService.saveAll(itemOptionListRequest, itemService.findById(item_id));
@@ -84,7 +85,7 @@ public class ItemController {
 
         String imagePath = itemRequest.getImagePath();
 
-        Category category = categoryService.findById(categoryRequest.getCategoryName());
+        Category category = categoryService.findByName(categoryRequest.getCategoryName());
         Long itemId = itemService.update(itemRequest, category, imagePath, req.getParameter("itemId"));
 
         if (itemOptionListRequest.getItemOptionList() != null) {
@@ -124,10 +125,12 @@ public class ItemController {
 
         return "seller/itemList";
     }
+
     @GetMapping("/staticList")
     public String staticList() {
         return "seller/staticList";
     }
+
     @GetMapping("/statics")
     public String statics() {
         return "seller/statics";

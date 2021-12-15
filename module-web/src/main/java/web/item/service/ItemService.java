@@ -19,7 +19,6 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-
     public Long save(ItemRequest itemInsertRequest, Category category, String imagePath) {
         itemInsertRequest.setCategory(category);
         itemInsertRequest.setImagePath(imagePath);
@@ -49,10 +48,18 @@ public class ItemService {
         itemRepository.delete(item);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ItemResponse> findPagesBy(Long from, int size) {
         PageRequest pageRequest = PageRequest.of(0, size);
         return itemRepository.findByIdGreaterThanEqualOrderById(from, pageRequest)
+                .stream()
+                .map(ItemResponse::of)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ItemResponse> findByCategoryId(Long categoryId) {
+        return itemRepository.findByCategoryId(categoryId)
                 .stream()
                 .map(ItemResponse::of)
                 .collect(Collectors.toList());

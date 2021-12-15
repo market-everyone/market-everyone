@@ -32,7 +32,7 @@ class UserControllerTest extends TestWithSecurity {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @DisplayName("회원가입 - 성공")
+    @DisplayName("API - 회원가입 / 성공")
     @Test
     void signup_Success() throws Exception {
         //given
@@ -44,11 +44,10 @@ class UserControllerTest extends TestWithSecurity {
                 .content(objectMapper.writeValueAsBytes(userSignUpRequest)));
 
         //then
-        perform.andExpect(status().is2xxSuccessful())
-                .andDo(print());
+        perform.andExpect(status().isOk());
     }
 
-    @DisplayName("회원가입 - 실패(이메일 중복)")
+    @DisplayName("API - 회원가입 / 실패(이메일 중복)")
     @Test
     void signup_DuplicateEmail_Fail() throws Exception {
         //given
