@@ -18,7 +18,8 @@ public class Board extends BaseEntity {
     @Column(name = "BOARD_NO")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_NO")
     private User user;
 
     private String title;
