@@ -55,8 +55,6 @@ subprojects {
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
-//        testCompileOnly 'org.projectlombok:lombok'
-//        testAnnotationProcessor 'org.progectlombok:lombok'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'

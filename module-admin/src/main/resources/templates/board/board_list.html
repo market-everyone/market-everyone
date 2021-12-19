@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="layout/base :: layout (~{::title}, ~{::content})" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-게시판 관리</title>
+</head>
+
+<body id="page-top">
+<div class="container-fluid" th:fragment="content">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800" th:text="#{page.board.list}">게시글 목록</h1>
+    <p class="mb-4">해당 페이지에서 게시글을 관리할 수 있습니다.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <button class="btn btn-primary float-end"
+                    th:onclick="|location.href='@{/board/add}'|"
+                    th:text="#{page.addBoard}" type="button">게시글 등록
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered text-center" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>분류</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>등록일</th>
+                        <th>수정일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="board : ${result.dtoList}">
+                        <td th:text="${board.id}"></td>
+                        <td th:text="${board.type}"></td>
+                        <td><a th:href="@{/board/{boardId}(boardId=${board.id})}"
+                               th:text="${board.title}">
+                        </a></td>
+                        <td th:text="${board.user.name}"></td>
+                        <td th:text="${board.createDate}"></td>
+                        <td th:text="${board.modifiedDate}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <ul class="pagination h-100 justify-content-center align-items-center">
+                    <li class="page-item" th:if="${result.prev}">
+                        <a class="page-link"
+                           tabindex="-1" th:href="@{/board(page=${result.start - 1})}">Previous</a>
+                    </li>
+
+                    <li th:class=" 'page-item ' + ${result.page == page?'active':''}"
+                        th:each="page : ${result.pageList}">
+                        <a class="page-link"
+                           th:href="@{/board(page = ${page})}">[[${page}]]</a>
+                    </li>
+
+                    <li class="page-item" th:if="${result.next}">
+                        <a class="page-link"
+                           th:href="@{/board(page = ${result.end + 1})}">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
