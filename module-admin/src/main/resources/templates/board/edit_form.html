@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="layout/base :: layout (~{::title}, ~{::content})" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="en" th:replace="layout/base :: layout (~{::title}, ~{::content})"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -49,7 +50,12 @@
             </br>
             <div class="row">
                 <div class="col">
-                    <button class="w-100 btn btn-success btn-lg" type="submit">수정</button>
+                    <button class="w-100 btn btn-success btn-lg" type="submit">수정완료</button>
+                </div>
+                <div class="col">
+                    <button class="w-100 btn btn-danger btn-lg" id="btn-delete" th:onclick="deleteBoard()"
+                            type="button">삭제
+                    </button>
                 </div>
                 <div class="col">
                     <button class="w-100 btn btn-secondary btn-lg"
@@ -61,6 +67,16 @@
             </div>
         </form>
     </div> <!-- /container -->
+    <script th:inline="javascript">
+        function deleteBoard() {
+            let actionForm = $('form');
+            let boardId = $('#boardId').val();
+            actionForm
+                .attr('action', '/board/' + boardId + '/delete')
+                .attr('method', 'post');
+            actionForm.submit();
+        }
+    </script>
 </div>
 </body>
 </html>

@@ -52,4 +52,9 @@ public class BoardService {
                 boardRequestDTO.getType());
         return boardId;
     }
+
+    @Transactional
+    public void delete(Long boardId) {
+        boardRepository.deleteById(boardId);
+    }
 }
