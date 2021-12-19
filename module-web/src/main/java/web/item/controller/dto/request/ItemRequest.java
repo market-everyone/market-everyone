@@ -19,6 +19,7 @@ public class ItemRequest {
     private String exchange;
     private String refund;
     private String delivery;
+    private String imageName;
     private String imagePath;
     private Category category;
 
@@ -31,6 +32,7 @@ public class ItemRequest {
                 .content(content)
                 .exchange(exchange)
                 .refund(refund)
+                .imageName(imageName)
                 .imagePath(imagePath)
                 .category(category)
                 .delivery(delivery)

@@ -22,7 +22,7 @@
                         <th scope="row">상품 카테고리</th>
                         <td>
                             <select class="custom-select" aria-label="select" name="categoryName">
-                                <option th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+                                <option th:each="category : ${categoryList}" th:value="${category.name}" th:text="${category.name}"></option>
                             </select>
                         </td>
                     </tr>
@@ -136,10 +136,10 @@
     </form>
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/js/ckeditor/ckeditor.js}"></script>
-    <script>CKEDITOR.replace('editor',
-        {
-            filebrowserImageUploadUrl : '/item/itemInsert?type=Images'
-        });
+    <script>CKEDITOR.replace('editor', {
+        filebrowserUploadUrl: "/item/ckImage",
+        filebrowserImageUploadUrl: "/item/ckImage?type=Images"
+    });
     </script>
     <script>
         $(document).ready(function () {
