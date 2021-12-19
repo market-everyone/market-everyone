@@ -35,4 +35,10 @@ public class Board extends BaseEntity {
         this.content = content;
         this.type = type;
     }
+
+    public void update(String title, String content, Type type) {
+        this.title = title;
+        this.content = content;
+        this.type = type;
+    }
 }

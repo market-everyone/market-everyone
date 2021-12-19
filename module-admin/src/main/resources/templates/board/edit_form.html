@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="layout/base :: layout (~{::title}, ~{::content})" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-게시글 등록</title>
+</head>
+
+<body id="page-top">
+<div class="container-fluid" th:fragment="content">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800" th:text="#{page.addBoard}">게시글 등록</h1>
+    <div class="container">
+
+        <form method="post" th:action th:object="${board}">
+            <div>
+                <label>게시글 번호</label>
+                <input class="form-control" id="boardId" readonly th:field="*{id}" type="text">
+            </div>
+            </br>
+            <div>
+                <label for="title">제목</label>
+                <input class="form-control" id="title" placeholder="제목을 입력하세요" th:errorClass="field-error"
+                       th:field="*{title}" type="text">
+                <div class="field-error" th:errors="*{title}">제목 오류</div>
+            </div>
+            </br>
+            <div>
+                <label for="username">작성자</label>
+                <span class="form-control" id="username"
+                      readonly sec:authentication="principal.name"></span>
+            </div>
+            </br>
+            <div>
+                <label for="type">분류</label>
+                <select class="form-control form-select" id="type" th:field="*{type}">
+                    <option th:each="type : ${T(web.board.domain.Type).values()}"
+                            th:text="${type}"
+                            th:value="${type}"></option>
+                </select>
+            </div>
+            </br>
+            <div>
+                <label for="content">내용</label>
+                <textarea class="form-control" id="content" placeholder="내용을 입력하세요" rows="5"
+                          th:field="*{content}"></textarea>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col">
+                    <button class="w-100 btn btn-success btn-lg" type="submit">수정</button>
+                </div>
+                <div class="col">
+                    <button class="w-100 btn btn-secondary btn-lg"
+                            onclick="location.href='/'"
+                            th:onclick="|location.href='@{/board/{boardId}(boardId=${board.id})}'|"
+                            type="button">취소
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div> <!-- /container -->
+</div>
+</body>
+</html>
