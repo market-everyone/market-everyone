@@ -29,6 +29,7 @@ public class Item {
     private String exchange;
     private String refund;
     private String delivery;
+    private String imageName;
     private String imagePath;
 
 
@@ -41,6 +42,7 @@ public class Item {
         exchange = itemRequest.getExchange();
         refund = itemRequest.getRefund();
         delivery = itemRequest.getDelivery();
+        imageName = itemRequest.getImageName();
         imagePath = itemRequest.getImagePath();
     }
 }

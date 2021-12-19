@@ -1,0 +1,110 @@
+<! DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/base :: layout (~{::title}, ~{::content})">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="content" class="col-lg-9 pt-5">
+    <div class="row">
+        <div class="col">
+            <h3>상세페이지</h3>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col p-0">
+            <img th:src="${item.imagePath}" alt="상품 이미지">
+        </div>
+        <div class="col">
+            <table class="table">
+                <tr>
+                    <th class="align-middle p-1 w-25 pl-4">상품명</th>
+                    <td th:text="${item.name}"></td>
+                </tr>
+                <tr>
+                    <th class="align-middle p-1 w-25 pl-4">배송비</th>
+                    <td th:text="|3000|"></td>
+                </tr>
+                <tr>
+                    <th class="align-middle p-1 w-25 pl-4">구매 옵션</th>
+                    <td>
+                        <label>
+                            <select class="custom-select" id="itemOption">
+                                <optgroup label="-- 없음 --">
+                                    <option value="no" selected>선택되지 않음</option>
+                                </optgroup>
+                                <optgroup th:if="${#lists.size(options) > 0}" th:label="${option.name}" th:each="option : ${options}">
+                                    <option th:value="${option.price}" th:text="${option.price}" id="optionPrice"></option>
+                                </optgroup>
+                            </select>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="align-middle p-1 w-25 pl-4">가격</th>
+                    <td id="price" th:text="${item.price}" th:value="${item.price}"></td>
+                </tr>
+                <tr>
+                    <th class="align-middle p-1 w-25 pl-4">결제 금액</th>
+                    <td id="totalPrice" th:text="${item.price}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <h2>상품 설명</h2>
+        </div>
+        <div class="col">
+            <h2>배송 / 교환 / 환불</h2>
+        </div>
+        <div class="col">
+            <h2>리뷰</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col" th:text="${item.content}"></div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>배송 규정</th>
+                <td th:text="${item.delivery}"></td>
+            </tr>
+            <tr>
+                <th>교환 규정</th>
+                <td th:text="${item.exchange}"></td>
+            </tr>
+            <tr>
+                <th>환불 규정</th>
+                <td th:text="${item.refund}"></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <div class="row">
+        리뷰 들어갈 자리
+    </div>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script>
+        $(document).ready(function () {
+            var price = parseInt($('#price').attr('value'));
+            var totalPrice = $('#totalPrice');
+            $('#itemOption').change(function () {
+                var optPrice = $(this).val();
+                if (optPrice === "no") {
+                    totalPrice.text(price);
+                } else {
+                    optPrice = parseInt(optPrice);
+                    totalPrice.text(price + optPrice);
+                }
+            });
+
+        });
+    </script>
+</div>
+</body>
+</html>
