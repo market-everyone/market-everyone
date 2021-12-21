@@ -18,7 +18,7 @@ public class ServiceCenterController {
         return "service/faq";
     }
 
-    @GetMapping("/qna")
+    @GetMapping("/qna/register")
     public String qna() {
         return "service/personal-qna-form";
     }

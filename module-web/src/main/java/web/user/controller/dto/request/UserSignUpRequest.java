@@ -51,4 +51,13 @@ public class UserSignUpRequest {
         return password.equals(passwordConfirm);
     }
 
+    @Override
+    public String toString() {
+        return "UserSignUpRequest{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
+    }
 }
