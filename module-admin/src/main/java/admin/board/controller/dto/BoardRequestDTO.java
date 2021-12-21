@@ -3,12 +3,14 @@ package admin.board.controller.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import web.board.domain.Board;
 import web.board.domain.Type;
 import web.user.domain.User;
 
 @Getter
 @NoArgsConstructor
+@Setter
 public class BoardRequestDTO {
 
     private User user;

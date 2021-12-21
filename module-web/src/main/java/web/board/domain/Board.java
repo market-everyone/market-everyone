@@ -18,7 +18,8 @@ public class Board extends BaseEntity {
     @Column(name = "BOARD_NO")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_NO")
     private User user;
 
     private String title;
@@ -31,6 +32,12 @@ public class Board extends BaseEntity {
     public Board(Long id, User user, String title, String content, Type type) {
         this.id = id;
         this.user = user;
+        this.title = title;
+        this.content = content;
+        this.type = type;
+    }
+
+    public void update(String title, String content, Type type) {
         this.title = title;
         this.content = content;
         this.type = type;

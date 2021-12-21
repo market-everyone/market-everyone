@@ -49,10 +49,10 @@ class SellerServiceTest {
                 .build();
 
         //when
-//        PageResultDTO<SellerResponseDTO, Seller> pageResultDTO = sellerService.getList(pageRequestDTO);
+        PageResultDTO<SellerResponseDTO, Seller> pageResultDTO = sellerService.getList(SellerStatus.APPROVAL, pageRequestDTO);
 
         //then
-//        assertThat(pageResultDTO.getDtoList()).isNotEmpty();
+        assertThat(pageResultDTO.getDtoList()).isNotEmpty();
     }
 
     @Test

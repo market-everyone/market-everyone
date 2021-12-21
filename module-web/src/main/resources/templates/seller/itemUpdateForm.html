@@ -10,7 +10,7 @@
         <input type="hidden" th:value="${item.id}" name="itemId">
         <div class="row">
             <div class="col-6">
-                <img th:src="${item.imagePath}" width="400px" height="400px">
+                <img th:src="@{/images/} + ${item.imageName}" width="400px" height="400px">
             </div>
             <div class="col-6">
                 <table class="table">
@@ -22,7 +22,7 @@
                         <th scope="row">상품 카테고리</th>
                         <td>
                             <select class="custom-select" aria-label="select" name="categoryName">
-                                <option th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}" th:selected="${category.id==item.category.id}"></option>
+                                <option th:each="category : ${categoryList}" th:value="${category.name}" th:text="${category.name}" th:selected="${category.id==item.category.id}"></option>
                             </select>
                         </td>
                     </tr>

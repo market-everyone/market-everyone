@@ -36,23 +36,20 @@ public class ItemController {
     @GetMapping("/itemInsertForm")
     public String itemInsertForm(Model model) {
 
-        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("categoryList", categoryService.findAll());
         return "seller/itemInsertForm";
     }
 
     @PostMapping("/itemInsert")
     public String itemInsert(@ModelAttribute CategoryRequest categoryRequest,
-                                 @ModelAttribute ItemRequest itemInsertRequest,
-                                 @ModelAttribute ItemOptionListRequest itemOptionListRequest,
-                                 HttpServletRequest req,
-                                 HttpServletResponse res,
-                                 @RequestPart(value = "itemImage") MultipartFile file) throws IOException {
-
-        ImageUtil imageUtil = new ImageUtil();
-        String imagePath = imageUtil.uploadImage(req, res, file);
+                             @ModelAttribute ItemRequest itemInsertRequest,
+                             @ModelAttribute ItemOptionListRequest itemOptionListRequest,
+                             HttpServletRequest req,
+                             HttpServletResponse res,
+                             @RequestPart(value = "itemImage") MultipartFile file) throws IOException {
 
         Category category = categoryService.findByName(categoryRequest.getCategoryName());
-        Long item_id = itemService.save(itemInsertRequest, category, imagePath);
+        Long item_id = itemService.save(itemInsertRequest, category, req, res, file);
         if (itemOptionListRequest.getItemOptionList() != null) {
             optionService.saveAll(itemOptionListRequest, itemService.findById(item_id));
         }
@@ -66,7 +63,7 @@ public class ItemController {
         List<Category> categories = categoryService.findAll();
         List<ItemOption> itemOptions = optionService.findAllByItemId(item.getId());
         model.addAttribute("item", item);
-        model.addAttribute("categories", categories);
+        model.addAttribute("categoryList", categories);
         model.addAttribute("options", itemOptions);
 
         return "seller/itemUpdateForm";
@@ -78,22 +75,13 @@ public class ItemController {
                              @ModelAttribute CategoryRequest categoryRequest,
                              HttpServletRequest req,
                              HttpServletResponse res,
-                             @RequestPart(value = "itemImage", required = false) MultipartFile file) {
+                             @RequestPart(value = "itemImage", required = false) MultipartFile file) throws IOException {
 
-        ImageUtil imageUtil = new ImageUtil();
-        // String imagePath = imageUtil.uploadImage(req, res, file);
-
-        String imagePath = itemRequest.getImagePath();
-
+        Long id = Long.valueOf(req.getParameter("itemId"));
         Category category = categoryService.findByName(categoryRequest.getCategoryName());
-        Long itemId = itemService.update(itemRequest, category, imagePath, req.getParameter("itemId"));
-
+        Long itemId = itemService.update(itemRequest, category, req, res, file, id);
         if (itemOptionListRequest.getItemOptionList() != null) {
             optionService.deleteAllByItemId(itemId);
-            for (int i = 0; i < itemOptionListRequest.getItemOptionList().size(); i++) {
-                System.out.println("price = " + itemOptionListRequest.getItemOptionList().get(i).getPrice());
-                System.out.println("quantity = " + itemOptionListRequest.getItemOptionList().get(i).getQuantity());
-            }
             optionService.saveAll(itemOptionListRequest, itemService.findById(itemId));
         } else {
             optionService.deleteAllByItemId(itemId);
@@ -134,5 +122,25 @@ public class ItemController {
     @GetMapping("/statics")
     public String statics() {
         return "seller/statics";
+    }
+
+    @GetMapping("/{id}")
+    public String itemDetail(@PathVariable Long id, Model model) {
+
+        Item item = itemService.findById(id);
+        List<ItemOption> options = optionService.findAllByItemId(id);
+        if (options.size() != 0) {
+            model.addAttribute("options", options);
+        }
+        model.addAttribute("item", item);
+        return "item/itemDetail";
+    }
+
+    @PostMapping("/ckImage")
+    @ResponseBody
+    public String imageUpload(@RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
+        System.out.println("작동");
+
+        return "";
     }
 }
