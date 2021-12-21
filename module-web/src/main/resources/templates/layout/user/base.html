@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" th:fragment="layout (head, content)" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="${head}">
-    </head>
 
+    </head>
     <body>
-        <div th:replace="layout/navigation :: common_nav"></div>
-        <div class="container d-flex h-100 justify-content-end">
+        <div th:replace="layout/navigation :: top_nav"></div>
+        <nav th:replace="layout/navigation :: common_nav"></nav>
+        <div class="container d-flex h-100 justify-content-end pt-5">
             <div th:replace="layout/user/sidebar :: sidebar"></div>
             <div class="row justify-content-center align-self-center w-75 pr-2">
                 <div th:replace="${content}">
@@ -15,11 +16,6 @@
         </div>
     </body>
 
-    <!-- Scroll to Top Button-->
-    <!--<a class="scroll-to-top rounded" href="#page-top">-->
-    <!--    <i class="fas fa-angle-up"></i>-->
-    <!--</a>-->
-    <!--<div th:replace="/layout/logout_modal :: common_logout_modal"></div>-->
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
