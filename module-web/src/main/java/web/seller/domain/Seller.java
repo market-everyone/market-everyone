@@ -19,8 +19,13 @@ public class Seller extends BaseEntity {
     private String password;
 
     private String brandName;
+
+    @Column(length = 1000)
     private String brandContent;
+
+    @Column(length = 1000)
     private String itemContent;
+
     private String imagePath;
 
     @Enumerated(value = EnumType.STRING)
