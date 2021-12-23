@@ -23,6 +23,8 @@ public class Board extends BaseEntity {
     private User user;
 
     private String title;
+
+    @Column(length = 1000)
     private String content;
 
     @Enumerated(value = EnumType.STRING)

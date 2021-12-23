@@ -22,6 +22,7 @@ public class SellerRepositoryImpl implements SellerRepositoryCustom {
     public Page<Seller> findApprovalSellers(SellerStatus status, Pageable pageable) {
         QueryResults<Seller> result = queryFactory.selectFrom(seller)
                 .where(seller.sellerStatus.eq(status))
+                .orderBy(seller.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
