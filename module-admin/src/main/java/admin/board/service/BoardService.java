@@ -35,11 +35,11 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public PageResultDTO<BoardResponseDTO, Board> getList(PageRequestDTO requestDTO) {
+    public PageResultDTO<BoardResponseDTO, Board> findPageBoard(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("BOARD_NO"));
-        Page<Board> result = boardRepository.findPageBoard(pageable);
+        Page<Board> pageBoard = boardRepository.findPageBoard(pageable);
         Function<Board, BoardResponseDTO> fn = (BoardResponseDTO::new);
-        return new PageResultDTO<>(result, fn);
+        return new PageResultDTO<>(pageBoard, fn);
     }
 
     @Transactional
