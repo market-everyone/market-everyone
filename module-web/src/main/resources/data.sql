@@ -328,3 +328,14 @@ insert into ITEM(CATEGORY_NO, NAME, PRICE, QUANTITY, CONTENT, IMAGE_PATH) values
 insert into ITEM(CATEGORY_NO, NAME, PRICE, QUANTITY, CONTENT, IMAGE_PATH) values(24, '항균 대형 강아지집 / 애견하우스' ,49900, 1000, '내용', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/162682974438632701.jpg?gif=1&w=360&h=360&c=c&q=0.8');
 insert into ITEM(CATEGORY_NO, NAME, PRICE, QUANTITY, CONTENT, IMAGE_PATH) values(24, '자작나무 원목 강아지집_스탠다드형 사이즈업/15가지 펫텐트 하우스중 택1' ,139000, 1000, '내용', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/162978999630736611.jpg?gif=1&w=360&h=360&c=c&q=0.8');
 insert into ITEM(CATEGORY_NO, NAME, PRICE, QUANTITY, CONTENT, IMAGE_PATH) values(24, '코튼캔디 극세사 블랭킷 필로우 세트 (아이보리/핑크/그레이)' ,13900, 1000, '내용', 'https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/163715328441874600.jpg?gif=1&w=360&h=360&c=c&q=0.8');
+
+
+insert into USER(USER_NO, NAME, EMAIL, PASSWORD, POINT) values(1, 'Kim', 'abc@abc.de', 12345678, 2000);
+insert into USER(USER_NO, NAME, POINT) values(2, 'Park', 1000);
+
+insert into ORDERS(ORDER_NO, USER_NO, STATUS) values (1, 1, 'ORDER');
+insert into ORDERS(ORDER_NO, USER_NO, STATUS) values (2, 2, 'ORDER');
+insert into ORDERS(ORDER_NO, USER_NO, STATUS) values (3, 1, 'ORDER');
+
+
+insert into ORDER_ITEM(ORDER_ITEM_NO, ORDER_NO, ITEM_NO, PRICE, COUNT) values (1, 1, 2, 10000, 1);
