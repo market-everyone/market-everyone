@@ -4,7 +4,7 @@ import lombok.Getter;
 import web.seller.domain.Seller;
 import web.seller.domain.SellerStatus;
 
-import static admin.util.CustomStringUtils.toStringDateTime;
+import static web.util.CustomStringUtils.toStringDateTime;
 
 @Getter
 public class SellerResponseDTO {

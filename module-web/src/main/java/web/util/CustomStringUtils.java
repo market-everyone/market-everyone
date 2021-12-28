@@ -1,4 +1,4 @@
-package admin.util;
+package web.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
