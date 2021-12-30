@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "orders")
+@Table(name = "ORDERS")
 @Entity
 @Getter @Setter
 @Builder
@@ -32,8 +32,7 @@ public class Order {
 
     private LocalDateTime date;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public void addOrderItem(OrderItem orderItem){
@@ -41,14 +40,17 @@ public class Order {
         orderItem.setOrder(this);
     }
 
-    public static Order createOrder(User user, Item item, OrderItem... orderItems){
+    public static Order createOrder(User user, OrderItem... orderItems){
         Order order = new Order();
+
         order.setUser(user);
         order.setStatus(OrderStatus.ORDER);
         order.setDate(LocalDateTime.now());
+
         for(OrderItem orderItem : orderItems){
             order.addOrderItem(orderItem);
         }
+
         return order;
     }
 

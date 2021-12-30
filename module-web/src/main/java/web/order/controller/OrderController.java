@@ -1,6 +1,7 @@
 package web.order.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,18 +9,17 @@ import web.item.domain.Item;
 import web.item.service.ItemService;
 import web.order.domain.Order;
 import web.order.service.OrderService;
-import web.user.domain.User;
+import web.security.UserPrincipal;
 import web.user.service.UserService;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-//@RequestMapping("order")
+@RequestMapping("order")
 public class OrderController {
 
     private final OrderService orderService;
-    private final UserService userService;
     private final ItemService itemService;
 
     @GetMapping(value = "/order")
@@ -47,7 +47,6 @@ public class OrderController {
 //        List<Order> orders = orderService.findOrders(order)
 //    }
 
-    /////
     @GetMapping("/order/orderList")
     public String OrderList(Model model){
         List<Order> orders = orderService.findOrders();
@@ -60,14 +59,26 @@ public class OrderController {
         return "/order/orderListDetail";
     }
 
-    @GetMapping("/order/payReady")
-    public String PayReady(){
-        return "/order/payReady";
+    // 주문 폼 이동
+    @PostMapping("/orderForm") // get이..
+    public String createOrderForm(@RequestParam("itemId") Long id, Model model){
+        Item item = itemService.findById(id);
+        model.addAttribute("item", item);
+        return "order/orderForm";
     }
 
-    @GetMapping("/order/payComp")
-    public String PayComp(){
-        return "/order/payComp";
-    }
+    // 주문 완료
+    @PostMapping("/orderCompleted")
+    public String orderComp(@RequestParam("itemId") Long itemNo,
+                            @AuthenticationPrincipal UserPrincipal userPrincipal,
+                            Model model){
 
+        Item item = itemService.findById(itemNo);
+        model.addAttribute("item", item);
+
+        Long userNo = userPrincipal.getUser().getId();
+        orderService.order(userNo, itemNo, 1);
+
+        return "order/orderCompleted";
+    }
 }

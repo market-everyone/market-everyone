@@ -26,10 +26,6 @@ public class OrderService {
     @Transactional
     public Long order(Long userNo, Long itemNo, int count){
 
-//        User user = userRepository.findOne(userNo);
-//        User user = userRepository.findById(user.getId()).get();
-//        Item item = itemRepository.findOne(itemNo);
-
         // Entity 조회
         User user = userRepository.findById(userNo).get();
         Item item = itemRepository.findById(itemNo).get();
@@ -38,11 +34,10 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 
         // 주문 생성
-        Order order = Order.createOrder(user, item, orderItem);
+        Order order = Order.createOrder(user, orderItem);
 
         // 주문 저장
         orderRepository.save(order);
-//        order.getId();
         return order.getId();
     }
 
