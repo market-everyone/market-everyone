@@ -5,6 +5,7 @@ import web.board.domain.Board;
 import web.board.domain.Type;
 import web.user.domain.User;
 
+
 @Getter
 public class BoardResponseDTO {
 

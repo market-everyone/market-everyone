@@ -4,6 +4,7 @@ import lombok.Getter;
 import web.seller.domain.Seller;
 import web.seller.domain.SellerStatus;
 
+
 @Getter
 public class SellerResponseDTO {
 
