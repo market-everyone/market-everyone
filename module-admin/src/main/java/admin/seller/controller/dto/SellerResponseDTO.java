@@ -4,10 +4,6 @@ import lombok.Getter;
 import web.seller.domain.Seller;
 import web.seller.domain.SellerStatus;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-
 @Getter
 public class SellerResponseDTO {
 

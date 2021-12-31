@@ -5,10 +5,6 @@ import web.board.domain.Board;
 import web.board.domain.Type;
 import web.user.domain.User;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-
 @Getter
 public class BoardResponseDTO {
 
