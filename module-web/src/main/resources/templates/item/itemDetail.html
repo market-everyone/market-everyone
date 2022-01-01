@@ -12,6 +12,8 @@
         </div>
     </div>
     <hr>
+
+    <form th:action="@{/order/orderForm}" method="post">
     <div class="row">
         <div class="col p-0">
             <img th:src="${item.imagePath}" alt="상품 이미지">
@@ -49,9 +51,17 @@
                     <th class="align-middle p-1 w-25 pl-4">결제 금액</th>
                     <td id="totalPrice" th:text="${item.price}"></td>
                 </tr>
+
+                <tr>
+                    <th class="align-middle p-1 w-25 pl-4">
+                    <td><button type="submit" name="itemId" th:value="${item.id}" class="btn btn-primary">구매하기</td>
+                    </th>
+                </tr>
             </table>
         </div>
     </div>
+    </form>
+
     <hr>
     <div class="row">
         <div class="col">
