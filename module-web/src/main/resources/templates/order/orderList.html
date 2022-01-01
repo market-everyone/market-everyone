@@ -11,7 +11,6 @@
     </div>
 
     <div class="row">
-
         <body>
         <div class="content">
             <div class="container">
@@ -59,6 +58,41 @@
         </div>
         </body>
     </div>
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>회원명</th>
+            <th>대표상품 이름</th>
+            <th>대표상품 주문가격</th>
+            <th>대표상품 주문수량</th>
+            <th>상태</th>
+            <th>일시</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="item : ${orders}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.orderItems[0].item.id}"></td>
+            <td th:text="${item.orderItems[0].price}"></td>
+            <td th:text="${item.orderItems[0].count}"></td>
+            <td th:text="${item.status}"></td>
+<!--            <td th:text="${item.orderDate}"></td>-->
+            <td>
+<!--                <a th:if="${item.status.name() == 'ORDER'}" href="#"-->
+<!--                   th:href="'javascript:cancel('+${item.id}+')'"-->
+<!--                   class="btn btn-danger">CANCEL</a> </td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
 </div>
 
 </html>

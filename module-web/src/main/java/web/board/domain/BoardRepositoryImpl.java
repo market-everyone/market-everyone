@@ -19,7 +19,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     @Override
     public Page<Board> findPageBoard(Pageable pageable) {
         QueryResults<Board> result = queryFactory.selectFrom(board)
-                .orderBy(board.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
