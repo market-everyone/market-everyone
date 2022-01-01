@@ -2,6 +2,7 @@ package web.seller.domain;
 
 import lombok.*;
 import web.common.entity.BaseEntity;
+import web.inquiry.domain.Answer;
 
 import javax.persistence.*;
 
@@ -16,6 +17,7 @@ public class Seller extends BaseEntity {
     private Long id;
 
     private String email;
+
     private String password;
 
     private String brandName;

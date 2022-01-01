@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="layout/base :: layout (~{::title}, ~{::content})" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-게시글</title>
+</head>
+
+<body id="page-top">
+<div class="container-fluid" th:fragment="content">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800" th:text="#{page.inquiry}">문의글 상세</h1>
+    <div class="container">
+        <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+        <div>
+            <label>문의글 번호</label>
+            <input class="form-control" id="boardId" readonly th:value="${inquiry.id}" type="text" value="1">
+        </div>
+        </br>
+        <div>
+            <label for="title">제목</label>
+            <input class="form-control" id="title"
+                   readonly th:value="${inquiry.title}" type="text">
+        </div>
+        </br>
+        <div>
+            <label for="username">작성자</label>
+            <input class="form-control" id="username"
+                   readonly th:value="${inquiry.user.name}">
+        </div>
+        </br>
+        <div>
+            <label for="username">등록날짜</label>
+            <input class="form-control" id="createDate"
+                   readonly th:value="${inquiry.createDate}">
+        </div>
+        </br>
+        <div>
+            <label for="type">분류</label>
+            <input class="form-control form-select" id="type" readonly th:value="${inquiry.type}">
+        </div>
+        </br>
+        <div>
+            <label for="content">내용</label>
+            <textarea class="form-control" id="content" readonly rows="5" th:text="${inquiry.content}"></textarea>
+        </div>
+        <hr>
+        <th:block>
+            <form th:object="${answer}" th:action="@{/inquiry/{inquiryId}/answer(inquiryId=${inquiry.id})}"
+                  method="post">
+                <div th:if="${inquiry.answer}">
+                    <label for="existAnswerContent">답변 내용</label>
+                    <div>
+                        <div>
+                            <span>작성자: </span>
+                            <span>[[${inquiry.answer.username}]]</span>
+                        </div>
+                        <div>
+                            <span>답변 작성 시각: </span>
+                            <span>[[${inquiry.answer.proxyCreateDate}]]</span>
+                        </div>
+                        <div>
+                            <span>답변 수정 시각: </span>
+                            <span>[[${inquiry.answer.proxyModifiedDate}]]</span>
+                        </div>
+                        <textarea name="content" class="form-control" id="existAnswerContent" readonly rows="5"
+                                  th:text="${inquiry.answer.content}"></textarea>
+                        <button id="answerEditBtn" class="btn btn-primary btn-sm" type="button"
+                                th:onclick="showProcessEditBtn()">답변수정
+                        </button>
+                        <button id="processAnswerEdit" class="btn btn-success btn-sm hide" style="display: none"
+                                type="submit">수정완료
+                        </button>
+                        <button id="cancelEditAnswerBtn" class="btn btn-secondary btn-sm hide" style="display: none"
+                                type="button" th:onclick="goToDetailPage()">취소
+                        </button>
+                    </div>
+                </div>
+                <div th:unless="${inquiry.answer}">
+                    <label for="answerContent">답변 내용</label>
+                    <div>
+                        <span>작성자: </span>
+                        <span name="username" sec:authorize="isAuthenticated()"
+                              sec:authentication="principal.name"></span>
+                        <textarea class="form-control" id="answerContent" th:field="*{content}" rows="5"></textarea>
+                        <button class="btn btn-primary btn-sm" type="submit">답변등록</button>
+                    </div>
+                </div>
+            </form>
+        </th:block>
+        </br>
+        <div class="row">
+            <div class="col text-center">
+                <button class="w-50 btn btn-secondary btn-md"
+                        onclick="location.href='/'"
+                        th:text="#{button.list}"
+                        th:onclick="|location.href='@{/inquiry}'|"
+                        type="button">목록으로
+                </button>
+            </div>
+        </div>
+    </div> <!-- /container -->
+    <script th:inline="javascript">
+        function showProcessEditBtn() {
+            $('#existAnswerContent').removeAttr('readOnly');
+            $('#processAnswerEdit').show();
+            $('#cancelEditAnswerBtn').show();
+            $('#answerEditBtn').hide();
+        }
+
+        function goToDetailPage() {
+            /*<![CDATA[*/
+            let inquiryId = /*[[${inquiry.id}]]*/ 1;
+            /*]]>*/
+            location.href = '/inquiry/' + inquiryId;
+        }
+    </script>
+</div>
+</body>
+</html>

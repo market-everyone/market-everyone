@@ -1,29 +1,34 @@
-package admin.board.controller.dto;
+package admin.inquiry.controller.dto;
 
 import lombok.Getter;
-import web.board.domain.Board;
-import web.board.domain.Type;
+import web.inquiry.domain.Answer;
+import web.inquiry.domain.Inquiry;
+import web.inquiry.domain.InquiryType;
 import web.user.domain.User;
 
 import static web.util.CustomStringUtils.toStringDateTime;
 
 @Getter
-public class BoardResponseDTO {
+public class InquiryResponseDTO {
 
     private final Long id;
     private final User user;
+    private final InquiryType type;
+    private final Answer answer;
     private final String title;
     private final String content;
-    private final Type type;
+    private final String imagePath;
     private final String createDate;
     private final String modifiedDate;
 
-    public BoardResponseDTO(Board entity) {
+    public InquiryResponseDTO(Inquiry entity) {
         id = entity.getId();
         user = entity.getUser();
+        type = entity.getType();
+        answer = entity.getAnswer();
         title = entity.getTitle();
         content = entity.getContent();
-        type = entity.getType();
+        imagePath = entity.getImagePath();
         createDate = toStringDateTime(entity.getCreateDate());
         modifiedDate = toStringDateTime(entity.getModifiedDate());
     }
