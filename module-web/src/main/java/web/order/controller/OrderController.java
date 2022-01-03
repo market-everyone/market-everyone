@@ -4,15 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import web.item.domain.Item;
 import web.item.service.ItemService;
 import web.order.domain.Order;
 import web.order.service.OrderService;
 import web.security.UserPrincipal;
+import web.user.service.UserService;
 
 import java.util.List;
 
@@ -26,7 +24,6 @@ public class OrderController {
 
     @GetMapping(value = "/order")
     public String createForm(Model model){
-
         List<Item> items = itemService.itemList();
         model.addAttribute("items", items);
 
@@ -42,6 +39,7 @@ public class OrderController {
 
         return "redirect:/orders";
     }
+
 
     @GetMapping("/order/orderList")
     public String OrderList(Model model){
@@ -77,5 +75,4 @@ public class OrderController {
 
         return "order/orderCompleted";
     }
-
 }

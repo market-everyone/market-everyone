@@ -14,25 +14,15 @@
                         <a class="nav-link" href="/users/join" style="color: #666666; font-size: 12px">회원가입</a>
                     </li>
                     <li class="nav-item font-weight-normal mr-3">
-                        <div class="dropdown">
-                            <button style="color: #666666; font-size: 12px; border: none" class="bg-light btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                고객센터
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" th:href="@{/board/notice}">공지사항</a>
-                                <a class="dropdown-item" th:href="@{/board/faq}">자주 묻는 질문</a>
-                                <a class="dropdown-item" href="/service/qna/register">1:1 문의하기</a>
-                                <a class="dropdown-item" href="/service/seller/register">판매자 등록</a>
-                            </div>
-                        </div>
+                        <a class="nav-link" href="#" style="color: #666666; font-size: 12px">고객센터</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
-    <nav th:fragment="common_nav" class="navbar navbar-expand-lg navbar-light shadow-sm bg-white border-bottom">
+    <nav th:fragment="common_nav" class="navbar navbar-expand-lg navbar-light shadow-lg bg-white border-bottom">
         <div class="container">
-            <a class="navbar-brand" href="/"><img th:src="@{/images/market-everyone.png}" alt="로고" width="150" height="45"></a>
+            <a class="navbar-brand" href="/"><img th:src="@{/images/market-everyone.png}" alt="로고" width="150" height="40"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

@@ -4,7 +4,6 @@ import admin.common.dto.PageRequestDTO;
 import admin.common.dto.PageResultDTO;
 import admin.seller.controller.dto.SellerRequestDTO;
 import admin.seller.controller.dto.SellerResponseDTO;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

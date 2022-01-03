@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.item.domain.Item;
 import web.item.domain.ItemRepository;
+import web.item.domain.category.Category;
 import web.order.domain.Order;
 import web.order.domain.OrderRepository;
 import web.order.domain.item.OrderItem;
@@ -33,11 +34,10 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 
         // 주문 생성
-        Order order = Order.createOrder(user, item, orderItem);
+        Order order = Order.createOrder(user, orderItem);
 
         // 주문 저장
         orderRepository.save(order);
-
         return order.getId();
     }
 
@@ -50,5 +50,4 @@ public class OrderService {
     public void cancelOrder(Long orderId){
         Order order = orderRepository.findById(orderId).get();
     }
-
 }

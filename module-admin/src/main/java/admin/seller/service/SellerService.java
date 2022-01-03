@@ -41,9 +41,9 @@ public class SellerService {
     @Transactional(readOnly = true)
     public PageResultDTO<SellerResponseDTO, Seller> getList(SellerStatus status, PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("SELLER_NO"));
-        Page<Seller> pageSeller = sellerRepository.findApprovalSellers(status, pageable);
+        Page<Seller> result = sellerRepository.findApprovalSellers(status, pageable);
         Function<Seller, SellerResponseDTO> fn = (SellerResponseDTO::new);
-        return new PageResultDTO<>(pageSeller, fn);
+        return new PageResultDTO<>(result, fn);
     }
 
     @Transactional

@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout/service/base :: layout (~{::head}, ~{::content})">
-    <head th:fragment="head">
-        <meta charset="utf-8">
-        <meta content="IE=edge" http-equiv="X-UA-Compatible">
-        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-        <meta content="" name="description">
-        <meta content="" name="author">
-        <title>마켓에브리원 | 질문 등록</title>
-        <!-- Custom fonts for this template-->
-        <link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-              rel="stylesheet">
-        <!-- Custom styles for this template-->
-        <link rel="stylesheet" th:href="@{/css/sb-admin-2.min.css}" type="text/css">
-    </head>
-<div th:fragment="content" class="col-lg-9">
-    <h3 class="text-gray-900 font-weight-bold mb-4">1:1 문의하기</h3>
-    <select class="form-control form-control-lg">
+      th:replace="layout/sc-base :: layout (~{::title}, ~{::content})">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-메인</title>
+</head>
+<div th:fragment="content" class="col-lg-9 mt-5">
+    <select class="w-75 form-control form-control-lg">
         <option selected>질문 카테고리</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -25,14 +14,14 @@
     </select>
 
     <div>
-        <input class="mt-4 form-control form-control-lg" type="text" placeholder="제목">
+        <input class="mt-4 w-75 form-control form-control-lg" type="text" placeholder="제목">
     </div>
 
     <div>
-        <textarea class="mt-4 h-25 form-control form-control-lg" rows="10" placeholder="내용"></textarea>
+        <textarea class="mt-4 w-75 h-25 form-control form-control-lg" rows="10" placeholder="내용"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-user btn-block mt-4 btn-lg">질문 등록하기</button>
+    <button type="submit" class="btn btn-primary btn-user btn-block mt-4 w-75 btn-lg">질문 등록하기</button>
 </div>
 
 </html>

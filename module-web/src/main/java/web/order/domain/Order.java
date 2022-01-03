@@ -17,8 +17,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ORDER_NO")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,7 +41,7 @@ public class Order {
         orderItem.setOrder(this);
     }
 
-    public static Order createOrder(User user, Item item, OrderItem... orderItems){
+    public static Order createOrder(User user, OrderItem... orderItems){
         Order order = new Order();
         order.setUser(user);
         order.setStatus(OrderStatus.ORDER);

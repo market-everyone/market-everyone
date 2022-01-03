@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import web.common.auth.AuthConverter;
 import web.user.controller.dto.request.UserInfoUpdateRequest;
 import web.user.controller.dto.request.UserSignUpRequest;
@@ -25,7 +23,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public String saveUser(@Valid @ModelAttribute UserSignUpRequest userSignUpRequest,
+    public String saveUser(@Valid @ModelAttribute(name = "userSignUpRequest") UserSignUpRequest userSignUpRequest,
                            BindingResult bindingResult,
                            Model model) {
         if (bindingResult.hasErrors()) {
@@ -52,7 +50,7 @@ public class UserController {
     @PostMapping("/update")
     public String updateUser(@ModelAttribute UserInfoUpdateRequest userInfoUpdateRequest,
                              Authentication authentication) {
-        User user = AuthConverter.findCurrentUserFromAuth(authentication);
+        User user =AuthConverter.findCurrentUserFromAuth(authentication);
         userService.update(user.getId(), userInfoUpdateRequest);
         return "redirect:/users/mypage";
     }

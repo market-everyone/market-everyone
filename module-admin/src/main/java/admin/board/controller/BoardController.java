@@ -24,7 +24,7 @@ public class BoardController {
 
     @GetMapping
     public String boardList(PageRequestDTO pageRequestDTO, Model model) {
-        model.addAttribute("result", boardService.findPageBoard(pageRequestDTO));
+        model.addAttribute("result", boardService.getList(pageRequestDTO));
         return "board/board_list";
     }
 
