@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout/auth/base :: layout (~{::head}, ~{::content})">
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <title>마켓에브리원|판매자 등록</title>
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}" type="text/css">
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" th:href="@{/css/sb-admin-2.min.css}" type="text/css">
+</head>
+
+<body>
+<div th:fragment="content" class="col-lg-6 mx-auto">
+    <div class="p-5">
+        <form th:action="@{/seller/signUp}" th:object="${sellerRequestDTO}" method="post" class="user">
+
+            <div class="form-group">
+                <label for="email" class="form-label font-weight-bold text-dark">이메일</label>
+                <input th:field="*{email}" class="form-control form-control-user" id="email"
+                       name="email" placeholder="이메일" type="text">
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="small text-danger mt-1 ml-3"></p>
+                <p th:if="${errors?.containsKey('emailError')}" class="small text-danger mt-1 ml-3">이미 존재하는 회원의 이메일입니다.</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label font-weight-bold text-dark">비밀번호</label>
+                <div class="mb-2 small">영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
+                <input th:value="*{password}" class="form-control form-control-user" name="password"
+                       placeholder="비밀번호" type="password" >
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="small text-danger mt-1 ml-3"></p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label font-weight-bold text-dark">비밀번호 확인</label>
+                <input th:value="*{passwordConfirm}" class="form-control form-control-user" name="passwordConfirm"
+                       placeholder="비밀번호 확인" type="password" >
+                <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" class="small text-danger mt-1 ml-3"></p>
+                <p th:if="${errors?.containsKey('passwordError')}" class="small text-danger mt-1 ml-3">비밀번호가 일치하지 않습니다.</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label font-weight-bold text-dark">브랜드명</label>
+                <div class="mb-2 small">등록할 상품의 브랜드명을 입력해주세요.</div>
+                <input th:value="${brandName}" class="form-control form-control-user" name="brandName">
+                <p th:if="${errors?.containsKey('brandNameError')}" class="small text-danger mt-1 ml-3">이미 존재하는 브랜드명입니다.</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label font-weight-bold text-dark">브랜드 설명</label>
+                <div class="mb-2 small">브랜드에 대해 설명해주세요.</div>
+                <textarea th:value="${brandContent}" style="resize: none; height: 300px" class="form-control form-control-lg" name="brandContent"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label font-weight-bold text-dark">상품 설명</label>
+                <div class="mb-2 small">상품에 대해 설명해주세요.</div>
+                <textarea th:value="${itemContent}" style="resize: none; height: 500px" class="form-control form-control-lg" name="itemContent"></textarea>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary btn-user btn-block mt-4">판매자 등록 신청하기</button>
+        </form>
+
+        <div class="text-center mt-4">
+            <span>이미 판매자 등록이 완료되셨나요?</span>
+            <a href="/seller/login">로그인</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
