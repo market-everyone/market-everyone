@@ -1,6 +1,9 @@
 package web.item.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +14,6 @@ import web.item.controller.dto.response.ItemResponse;
 import web.item.domain.Item;
 import web.item.domain.category.Category;
 import web.item.domain.category.dto.request.CategoryRequest;
-import web.item.domain.category.dto.response.CategoryResponse;
 import web.item.domain.category.service.CategoryService;
 import web.item.domain.option.ItemOption;
 import web.item.domain.option.dto.request.ItemOptionListRequest;
@@ -37,7 +39,7 @@ public class ItemController {
     public String itemInsertForm(Model model) {
 
         model.addAttribute("categoryList", categoryService.findAll());
-        return "seller/itemInsertForm";
+        return "item/itemInsertForm";
     }
 
     @PostMapping("/itemInsert")
@@ -66,7 +68,7 @@ public class ItemController {
         model.addAttribute("categoryList", categories);
         model.addAttribute("options", itemOptions);
 
-        return "seller/itemUpdateForm";
+        return "item/itemUpdateForm";
     }
 
     @PostMapping("itemUpdate")
@@ -105,23 +107,23 @@ public class ItemController {
         return "redirect:itemList";
     }
 
-    @GetMapping("/itemList")
-    public String itemList(Model model) {
-
-        List<Item> items = itemService.itemList();
-        model.addAttribute("items", items);
-
-        return "seller/itemList";
-    }
+//    @GetMapping("/itemList")
+//    public String itemList(Model model) {
+//
+//        List<Item> items = itemService.itemList();
+//        model.addAttribute("items", items);
+//
+//        return "item/itemList";
+//    }
 
     @GetMapping("/staticList")
     public String staticList() {
-        return "seller/staticList";
+        return "item/staticList";
     }
 
     @GetMapping("/statics")
     public String statics() {
-        return "seller/statics";
+        return "item/itemStatics";
     }
 
     @GetMapping("/{id}")
@@ -136,11 +138,12 @@ public class ItemController {
         return "item/itemDetail";
     }
 
-    @PostMapping("/ckImage")
-    @ResponseBody
-    public String imageUpload(@RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
-        System.out.println("작동");
+    @GetMapping("/itemList")
+    public String itemLiist(@PageableDefault(size = 4, sort = "id") Pageable pageable, Model model) {
 
-        return "";
+        Long id = 1L;
+        Page<ItemResponse> items = itemService.findAllBySeller(id, pageable);
+        model.addAttribute("items", items);
+        return "item/itemList";
     }
 }

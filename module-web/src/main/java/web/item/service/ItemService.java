@@ -1,7 +1,9 @@
 package web.item.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +51,7 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+
     public Long update(ItemRequest itemInsertRequest, Category category, HttpServletRequest req, HttpServletResponse res, @RequestParam(required = false) MultipartFile file, Long id) throws IOException {
         Item item = itemRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         ImageUtil imageUtil = new ImageUtil();
@@ -91,5 +94,17 @@ public class ItemService {
                 .stream()
                 .map(ItemResponse::of)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ItemResponse> findAllBySellerId(Long id, Pageable pageable) {
+        return itemRepository.findByCategoryIdOrderByIdDesc(id, pageable)
+                .stream()
+                .map(ItemResponse::of)
+                .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public Page<ItemResponse> findAllBySeller(Long id, Pageable pageable) {
+        return itemRepository.findByCategoryIdOrderByIdAsc(id, pageable).map(item -> new ItemResponse(item.getId(), item.getName(), item.getImagePath(), item.getPrice()));
     }
 }
