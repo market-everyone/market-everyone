@@ -1,53 +1,94 @@
 package web.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import web.security.CustomAccessDeniedHandler;
-import web.security.CustomAuthenticationEntryPoint;
-import web.security.CustomLogoutFilter;
-import web.security.CustomAuthenticationFilter;
+import web.security.*;
 import web.security.oauth2.CustomAuthenticationFailureHandler;
 import web.security.oauth2.CustomAuthenticationSuccessHandler;
 import web.security.oauth2.Oauth2UserPrincipalService;
+import web.seller.domain.Seller;
+import web.seller.domain.SellerRepository;
+import web.user.domain.User;
+import web.user.domain.UserRepository;
 
+import java.util.ArrayList;
+
+@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String USER = "USER";
+    private static final String SELLER = "SELLER";
     private static final String ADMIN = "ADMIN";
 
     private final Oauth2UserPrincipalService oauth2UserPrincipalService;
-
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
-
-    public WebSecurityConfig(Oauth2UserPrincipalService oauth2UserPrincipalService,
-                             CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
-                             CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
-        this.oauth2UserPrincipalService = oauth2UserPrincipalService;
-        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
-        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
-    }
+    private final UserRepository userRepository;
+    private final SellerRepository sellerRepository;
 
     @Bean
-    public CustomAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+    public CustomAuthenticationFilter userAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
         customAuthenticationFilter.setFilterProcessesUrl("/api/users/login");
         customAuthenticationFilter.setUsernameParameter("email");
         customAuthenticationFilter.setPasswordParameter("password");
-        customAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
+        customAuthenticationFilter.setAuthenticationManager(authentication -> {
+            User user = userRepository.findByEmail(authentication.getName())
+                    .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 회원의 이메일입니다."));
+
+            if (!new BCryptPasswordEncoder().matches((CharSequence) authentication.getCredentials(), user.getPassword())) {
+                throw new BadCredentialsException("비밀번호가 틀렸습니다.");
+            }
+
+            ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+            return new UsernamePasswordAuthenticationToken(new UserPrincipal(user),
+                    authentication.getCredentials(), authorities);
+        });
+        return customAuthenticationFilter;
+    }
+
+    @Bean
+    public CustomAuthenticationFilter sellerAuthenticationFilter() throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
+        customAuthenticationFilter.setFilterProcessesUrl("/api/sellers/login");
+        customAuthenticationFilter.setUsernameParameter("email");
+        customAuthenticationFilter.setPasswordParameter("password");
+        customAuthenticationFilter.setAuthenticationManager(authentication -> {
+            Seller seller = sellerRepository.findByEmail(authentication.getName())
+                    .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 회원의 이메일입니다."));
+
+            if (!new BCryptPasswordEncoder().matches((CharSequence) authentication.getCredentials(), seller.getPassword())) {
+                throw new BadCredentialsException("비밀번호가 틀렸습니다.");
+            }
+
+            ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_SELLER"));
+
+            return new UsernamePasswordAuthenticationToken(new SellerPrincipal(seller),
+                    authentication.getCredentials(), authorities);
+        });
         return customAuthenticationFilter;
     }
 
@@ -61,12 +102,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
     }
 
     @Override
@@ -90,11 +125,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/admin/**")
-                .hasRole(ADMIN)
+                .hasAnyRole(ADMIN, SELLER)
                 .antMatchers(HttpMethod.GET, "/admin/**")
-                .hasRole(ADMIN)
+                .hasAnyRole(ADMIN, SELLER)
                 .antMatchers(HttpMethod.GET, "/users/mypage")
-                .hasAnyRole(ADMIN, USER)
+                .hasAnyRole(ADMIN, SELLER, USER)
                 .anyRequest()
                 .permitAll()
                 .and()
@@ -108,9 +143,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler);
 
-        http
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(logoutFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(logoutFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     private CustomLogoutFilter logoutFilter() {

@@ -25,7 +25,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public String saveUser(@Valid @ModelAttribute UserSignUpRequest userSignUpRequest,
+    public String saveUser(@Valid UserSignUpRequest userSignUpRequest,
                            BindingResult bindingResult,
                            Model model) {
         if (bindingResult.hasErrors()) {

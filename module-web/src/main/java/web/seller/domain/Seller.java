@@ -2,6 +2,7 @@ package web.seller.domain;
 
 import lombok.*;
 import web.common.entity.BaseEntity;
+import web.user.domain.Role;
 
 import javax.persistence.*;
 
@@ -25,6 +26,9 @@ public class Seller extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     private SellerStatus sellerStatus;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public void approved() {
         this.sellerStatus = SellerStatus.APPROVAL;
