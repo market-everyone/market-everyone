@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage("/denied");
 
-/*
+
         http
                 .sessionManagement()
                 .maximumSessions(1)
@@ -70,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .expiredUrl("/")
                 .and()
                 .sessionFixation().changeSessionId();
-*/
+
     }
 }
 

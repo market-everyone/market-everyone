@@ -1,6 +1,7 @@
 package web.user.domain;
 
 import lombok.*;
+import web.common.entity.BaseEntity;
 import web.user.controller.dto.request.UserInfoUpdateRequest;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_NO")
@@ -59,5 +60,25 @@ public class User {
         if (!request.getMemo().equals("")) {
             memo = request.getMemo();
         }
+    }
+
+    public void update(String name,
+                       String address,
+                       String detailAddress,
+                       String postcode,
+                       String phone,
+                       int point) {
+        if (!name.isBlank()) {
+            this.name = name;
+        }
+        if (!address.isBlank()
+                && !detailAddress.isBlank()
+                && !postcode.isBlank()) {
+            this.address = new Address(postcode, address, detailAddress);
+        }
+        if (!phone.isBlank()) {
+            this.phone = phone;
+        }
+        this.point = point;
     }
 }
