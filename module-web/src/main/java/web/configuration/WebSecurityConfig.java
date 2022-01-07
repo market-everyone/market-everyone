@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CustomAuthenticationFilter sellerAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
-        customAuthenticationFilter.setFilterProcessesUrl("/api/seller/login");
+        customAuthenticationFilter.setFilterProcessesUrl("/api/sellers/login");
         customAuthenticationFilter.setUsernameParameter("email");
         customAuthenticationFilter.setPasswordParameter("password");
         customAuthenticationFilter.setAuthenticationManager(authentication -> {

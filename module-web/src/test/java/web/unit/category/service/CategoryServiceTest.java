@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,7 +43,7 @@ class CategoryServiceTest {
         List<CategoryResponse> categoryResponses = categoryService.findAllCategories();
 
         //then
-        assertSame(categoryResponses.size(), 10);
+        assertThat(categoryResponses.size()).isEqualTo(categories.size());
     }
 
     @Test
@@ -61,8 +61,8 @@ class CategoryServiceTest {
         CategoryResponse categoryResponse = categoryService.findById(1L);
 
         //then
-        assertSame(categoryResponse.getId(), 1L);
-        assertSame(categoryResponse.getName(), "테스트이름");
+        assertThat(categoryResponse.getId()).isEqualTo(category.getId());
+        assertThat(categoryResponse.getName()).isEqualTo(category.getName());
     }
 
     protected List<Category> createCategoryEntities() {

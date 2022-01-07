@@ -20,16 +20,16 @@ public class ServiceCenterController {
 
     @GetMapping("/qna/register")
     public String qna() {
-        return "service/personal-qna-form";
+        return "service/personalQnaForm";
     }
 
     @GetMapping("/myqna")
     public String myQna() {
-        return "service/my-qna";
+        return "user/myQna";
     }
 
     @GetMapping("/seller/register")
     public String sellerRegister() {
-        return "service/seller-register-form";
+        return "service/sellerRegisterForm";
     }
 }

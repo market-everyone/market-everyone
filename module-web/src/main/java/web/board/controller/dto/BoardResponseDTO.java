@@ -1,6 +1,6 @@
 package web.board.controller.dto;
 
-import lombok.Getter;
+import lombok.*;
 import web.board.domain.Board;
 import web.user.domain.User;
 
@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Getter
 public class BoardResponseDTO {
 
@@ -27,7 +30,18 @@ public class BoardResponseDTO {
         modifiedDate = toStringDateTime(entity.getModifiedDate());
     }
 
-    private String toStringDateTime(LocalDateTime localDateTime) {
+    public static BoardResponseDTO of(Board board) {
+        return BoardResponseDTO.builder()
+                .id(board.getId())
+                .user(board.getUser())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .createDate(toStringDateTime(board.getCreateDate()))
+                .modifiedDate(toStringDateTime(board.getModifiedDate()))
+                .build();
+    }
+
+    private static String toStringDateTime(LocalDateTime localDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return Optional.ofNullable(localDateTime)
                 .map(formatter::format)

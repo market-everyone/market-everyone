@@ -2,6 +2,8 @@ package web.review.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+import java.util.List;
 
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findAllByItemId(Long itemId);
 }
