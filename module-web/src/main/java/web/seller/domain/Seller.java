@@ -28,7 +28,6 @@ public class Seller extends BaseEntity {
     private String itemContent;
 
     private String imagePath;
-    private Role role;
 
     @Enumerated(value = EnumType.STRING)
     private SellerStatus sellerStatus;
