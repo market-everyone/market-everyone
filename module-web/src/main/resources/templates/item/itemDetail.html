@@ -12,7 +12,9 @@
         </div>
     </div>
     <hr>
-    <div class="row">
+
+    <form th:action="@{/order/orderForm}" method="post">
+        <div class="row">
         <div class="col p-0">
             <img th:src="${item.imagePath}" alt="상품 이미지">
         </div>
@@ -31,27 +33,28 @@
                     <td>
                         <label>
                             <select class="custom-select" id="itemOption">
-                                <optgroup label="-- 없음 --">
-                                    <option value="no" selected>선택되지 않음</option>
-                                </optgroup>
-                                <optgroup th:if="${#lists.size(options) > 0}" th:label="${option.name}" th:each="option : ${options}">
-                                    <option th:value="${option.price}" th:text="${option.price}" id="optionPrice"></option>
-                                </optgroup>
+
                             </select>
                         </label>
                     </td>
                 </tr>
                 <tr>
-                    <th class="align-middle p-1 w-25 pl-4">가격</th>
-                    <td id="price" th:text="${item.price}" th:value="${item.price}"></td>
+                    <th class="align-middle p-1 w-25 pl-4">구매 수량</th>
+                    <td><input type="number" id="quantity"></td>
                 </tr>
                 <tr>
                     <th class="align-middle p-1 w-25 pl-4">결제 금액</th>
                     <td id="totalPrice" th:text="${item.price}"></td>
                 </tr>
+                <tr>
+                    <th class="align-middle p-1 w-25 pl-4"></th>
+                    <td><button type="submit" name="itemId" th:value="${item.id}" class="btn btn-primary">구매하기</button></td>
+                </tr>
             </table>
         </div>
-    </div>
+        </div>
+    </form>
+
     <hr>
     <div class="row">
         <div class="col">
@@ -102,7 +105,73 @@
                     totalPrice.text(price + optPrice);
                 }
             });
+        });
+    </script>
+    <script th:inline="javascript">
+        /* <![CDATA [*/
+        let options = ['기본 옵션'];
+        let optionPrice = [];
+        optionPrice.push(/*[[ ${item.price} ]]*/)
+        let price = [];
+        let quantity = [];
+        quantity.push(/*[[ ${item.quantity} ]]*/)
 
+
+        /*[# th:if(#lists.size(options) > 0) th:each="option: ${options}"]*/
+            options.push(/*[[ ${option.name} ]]*/);
+            optionPrice.push(/*[[ ${option.price} ]]*/);
+            quantity.push(/*[[ ${option.quantity} ]]*/);
+        /*[/]*/
+        /* ]]> */
+
+        for (var i = 0; i < optionPrice.length; i++) {
+            if (i === 0) {
+                price[i] = optionPrice[i];
+            } else {
+                price[i] = optionPrice[i] + optionPrice[0];
+            }
+        }
+
+        $(document).ready(function () {
+
+            var itemOption = $('#itemOption');
+            var totalPrice = $('#totalPrice');
+            var currentQuantity = $('#quantity');
+
+            // 초기값 1
+            currentQuantity.val(1);
+
+            for (var i = 0; i < options.length; i++) {
+                itemOption.append($('<option>',
+                    {
+                        name: 'options',
+                        value: i,
+                        text: options[i] + '(+' + optionPrice[i] + ')'
+                    }));
+            }
+
+            itemOption.on('change',function () {
+                var optVal = parseInt($(this).val());
+                if (optVal === 0) {
+                    totalPrice.text(price[optVal]);
+                } else {
+                    totalPrice.text(price[optVal]);
+                }
+                currentQuantity.val(1);
+            });
+
+
+            currentQuantity.change(function () {
+                var optVal = itemOption.val();
+                var num = $(this).val();
+                if (currentQuantity.val() < 1 || currentQuantity.val() > quantity[optVal]) {
+                    alert('수량제한!');
+                    $(this).val(1);
+                    totalPrice.text(price[optVal]);
+                } else {
+                    totalPrice.text(parseInt(price[optVal]) * parseInt(num));
+                }
+            });
         });
     </script>
 </div>

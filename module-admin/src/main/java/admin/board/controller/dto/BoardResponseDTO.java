@@ -5,9 +5,7 @@ import web.board.domain.Board;
 import web.board.domain.Type;
 import web.user.domain.User;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import static web.util.CustomStringUtils.toStringDateTime;
 
 @Getter
 public class BoardResponseDTO {
@@ -28,12 +26,5 @@ public class BoardResponseDTO {
         type = entity.getType();
         createDate = toStringDateTime(entity.getCreateDate());
         modifiedDate = toStringDateTime(entity.getModifiedDate());
-    }
-
-    private String toStringDateTime(LocalDateTime localDateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return Optional.ofNullable(localDateTime)
-                .map(formatter::format)
-                .orElse("");
     }
 }

@@ -12,7 +12,7 @@
         <div class="content">
             <div class="container">
                 <br>
-                <h3>결제가 완료되었습니다!</h3> <br>
+                <h3>주문이 완료되었습니다!</h3> <br>
                 <div class="table-responsive">
                     <table class="table custom-table">
                         <thead>
@@ -24,35 +24,20 @@
                         </tr>
                         </thead>
 
-
                         <tbody>
                         <tr>
-                            <td>
-                                [사진]
-                            </td>
-                            <td>노이즈 캔슬링 헤드셋</td>
-                            <td> 199,000(1개)
-                            </td>
-                            <td rowspan="2">2,500</td>
-                            <td rowspan="2">230,500</td>
+                            <td>[사진]</td>
+                            <td th:text="${item.name}"></td>
+                            <td th:text="${item.price}"></td>
+                            <td th:text="3000"></td>
+                            <td th:text="total"></td>
                         </tr>
-
-                        <tr>
-                            <td>
-                                [사진]
-                            </td>
-                            <td>헤드셋 파우치</td>
-                            <td> 29,000(1개)
-                            </td>
-                        </tr>
-
-
                         </tbody>
                     </table>
                 </div>
 
                 <div th:align="center">
-                    <button type="button"> 홈으로 가기 </button>
+                    <button type="button" class="btn btn-success"> 홈으로 가기 </button>
                     <button type="button" class="btn btn-success"> 주문 상세 보기 </button>
                 </div>
             </div>

@@ -145,8 +145,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private CustomLogoutFilter logoutFilter() {
         return new CustomLogoutFilter(
-            (req, res, auth) -> res.sendRedirect("/"),
-            (req, res, auth) -> SecurityContextHolder.clearContext()
+                (req, res, auth) -> res.sendRedirect("/"),
+                (req, res, auth) -> SecurityContextHolder.clearContext()
         );
     }
 }
