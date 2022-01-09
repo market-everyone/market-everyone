@@ -6,8 +6,6 @@ import web.user.domain.Role;
 
 import javax.persistence.*;
 
-import javax.persistence.*;
-
 @Getter
 @NoArgsConstructor
 @Entity

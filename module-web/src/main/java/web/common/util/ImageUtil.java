@@ -11,7 +11,7 @@ public class ImageUtil {
     private String uploadPath = new File("module-web/src/main/resources/static/images").getAbsolutePath();
 
 
-    public String uploadImage(HttpServletResponse res, @RequestParam MultipartFile file) throws IOException {
+    public String uploadImage(HttpServletResponse res, @RequestParam MultipartFile file, Long id) throws IOException {
 
         OutputStream out = null;
 
@@ -25,9 +25,13 @@ public class ImageUtil {
             byte[] bytes = file.getBytes();
 
             // 업로드 경로
-            String imageUploadPath = uploadPath + File.separator + fileName;
+            String imageUploadPath = uploadPath + File.separator + id + File.separator + fileName;
 
-            out = new FileOutputStream(new File(imageUploadPath));
+            String mkdirPath = uploadPath + File.separator + id;
+
+            makeDir(mkdirPath);
+
+            out = new FileOutputStream(imageUploadPath);
             out.write(bytes);
             out.flush();
 
@@ -48,20 +52,25 @@ public class ImageUtil {
 
     }
 
-    public String getImageName(HttpServletResponse res, @RequestParam MultipartFile file) {
-
-        // 인코딩
-        res.setCharacterEncoding("UTF-8");
-        res.setContentType("text/html;charset=utf-8");
-
-        return file.getOriginalFilename();
-    }
-
     public void deleteImage(String path) {
 
         File file = new File(path);
         if (file.exists()) {
             file.delete();
         }
+    }
+
+    public void makeDir(String path) {
+
+        File folder = new File(path);
+
+        if (!folder.exists()) {
+            try {
+                folder.mkdir();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

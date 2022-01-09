@@ -75,7 +75,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setAuthenticationManager(authentication -> {
             Seller seller = sellerRepository.findByEmail(authentication.getName())
                     .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 회원의 이메일입니다."));
-
             if (!new BCryptPasswordEncoder().matches((CharSequence) authentication.getCredentials(), seller.getPassword())) {
                 throw new BadCredentialsException("비밀번호가 틀렸습니다.");
             }

@@ -13,8 +13,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByCategoryIdOrderByIdDesc(Long categoryId, Pageable pageable);
 
-    // Seller와 연동이되면 SELLER Id로 변경
-    Page<Item> findByCategoryIdOrderByIdAsc(Long categoryId, Pageable pageable);
+    Page<Item> findBySellerIdOrderByIdAsc(Long sellerId, Pageable pageable);
 
 
 }

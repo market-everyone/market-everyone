@@ -1,8 +1,10 @@
 package web.item.domain;
 import lombok.*;
+import web.common.entity.BaseEntity;
 import web.item.controller.dto.request.ItemRequest;
 import web.item.domain.category.Category;
 import web.item.domain.option.ItemOption;
+import web.seller.domain.Seller;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Item {
+public class Item{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,6 +33,10 @@ public class Item {
     private String delivery;
     private String imageName;
     private String imagePath;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_no")
+    private Seller seller;
 
 
     public void update(ItemRequest itemRequest) {
