@@ -36,6 +36,8 @@ public class OrderItem {
         orderItem.setCount(count);
         orderItem.setPrice(price);
 
+        item.removeQuantity(count);
+
         return orderItem;
     }
 
