@@ -48,6 +48,7 @@ public class OrderController {
     @PostMapping("/orderForm")
     public String createOrderForm(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                   @RequestParam("itemId") Long itemNo,
+                                  @RequestParam("quantity") int count,
                                   Model model){
 
         Item item = itemService.findById(itemNo);
@@ -55,20 +56,23 @@ public class OrderController {
 
         model.addAttribute("item", item);
         model.addAttribute("user", user);
+        model.addAttribute("count", count);
         return "order/orderForm";
     }
 
     // 주문 완료
     @PostMapping("/orderCompleted")
     public String orderCompleted(@RequestParam("itemId") Long itemNo,
-                            @AuthenticationPrincipal UserPrincipal userPrincipal,
-                            Model model){
+                                 @RequestParam("count") int count,
+                                 @AuthenticationPrincipal UserPrincipal userPrincipal,
+                                 Model model){
 
         Item item = itemService.findById(itemNo);
         model.addAttribute("item", item);
+        model.addAttribute("count", count);
 
         Long userNo = userPrincipal.getUser().getId();
-        orderService.order(userNo, itemNo, 1);
+        orderService.order(userNo, itemNo, count);
         return "order/orderCompleted";
     }
 }

@@ -45,4 +45,17 @@ public class Item {
         imageName = itemRequest.getImageName();
         imagePath = itemRequest.getImagePath();
     }
+
+    public void addQuantity(int quantity){
+        this.quantity += quantity;
+    }
+
+    public void removeQuantity(int quantity){
+        int restQuantity = this.quantity - quantity;
+        if(restQuantity < 0){
+//            throw new NotEnoughStockException("need more quantity");
+        }
+        this.quantity = restQuantity;
+    }
+
 }

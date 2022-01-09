@@ -30,7 +30,7 @@
                             <td th:text="${item.name}"></td>
                             <td th:text="${item.price}"></td>
                             <td th:text="3000"></td>
-                            <td th:text="total"></td>
+                            <td th:text="${item.price * count + 3000}"></td>
                         </tr>
                         </tbody>
                     </table>
