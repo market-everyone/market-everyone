@@ -2,18 +2,27 @@ package web.seller.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import web.common.auth.SellerAuthConverter;
+import web.item.controller.dto.response.ItemResponse;
+import web.item.service.ItemService;
 import web.seller.controller.dto.SellerLoginDTO;
 import web.seller.controller.dto.SellerRequestDTO;
 import web.seller.domain.Seller;
+import web.seller.domain.SellerStatus;
 import web.seller.service.SellerService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 
 @RequiredArgsConstructor
@@ -22,6 +31,7 @@ import javax.validation.Valid;
 public class SellerController {
 
     private final SellerService sellerService;
+    private final ItemService itemService;
 
     @GetMapping("/join")
     public String signUpPage(@ModelAttribute SellerRequestDTO sellerRequestDTO) {
@@ -31,8 +41,10 @@ public class SellerController {
     @PostMapping("/signUp")
     public String saveSeller(@Valid @ModelAttribute SellerRequestDTO sellerRequestDTO,
                              BindingResult bindingResult,
-                             Model model) {
-        Seller seller = new Seller();
+                             Model model,
+                             HttpServletResponse res,
+                             @RequestPart(value = "itemImage") MultipartFile file) throws IOException {
+
         if (bindingResult.hasErrors()) {
             sellerService.checkSellerSignUpRequestValidation(sellerRequestDTO, model);
             return "seller/join";
@@ -42,7 +54,7 @@ public class SellerController {
             return "seller/join";
         }
 
-        sellerService.save(sellerRequestDTO);
+        sellerService.save(sellerRequestDTO, res, file);
 
         return "redirect:login";
     }
@@ -52,4 +64,24 @@ public class SellerController {
         return "seller/login";
     }
 
+    @GetMapping("/mypage")
+    public String myPage(Authentication authentication, Model model, @PageableDefault(size = 4, sort = "id") Pageable pageable) {
+
+        Seller seller = SellerAuthConverter.findCurrentUserFromAuth(authentication);
+
+        model.addAttribute("seller", seller);
+        return "seller/mypage";
+    }
+
+    @GetMapping("/itemList")
+    public String itemList(Authentication authentication, Model model, @PageableDefault(size = 4, sort = "id") Pageable pageable) {
+
+        Seller seller = SellerAuthConverter.findCurrentUserFromAuth(authentication);
+        Page<ItemResponse> items = itemService.findAllBySeller(seller.getId(), pageable);
+
+        model.addAttribute("seller", seller);
+        model.addAttribute("items", items);
+
+        return "seller/itemList";
+    }
 }

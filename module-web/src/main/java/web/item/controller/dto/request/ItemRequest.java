@@ -4,6 +4,8 @@ package web.item.controller.dto.request;
 import lombok.*;
 import web.item.domain.Item;
 import web.item.domain.category.Category;
+import web.seller.domain.Seller;
+
 
 @Builder
 @AllArgsConstructor
@@ -23,6 +25,8 @@ public class ItemRequest {
     private String imagePath;
     private Category category;
 
+    private Seller seller;
+
 
     public Item toItem() {
         return Item.builder()
@@ -36,6 +40,7 @@ public class ItemRequest {
                 .imagePath(imagePath)
                 .category(category)
                 .delivery(delivery)
+                .seller(seller)
                 .build();
     }
 

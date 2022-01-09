@@ -10,7 +10,7 @@
         <input type="hidden" th:value="${item.id}" name="itemId">
         <div class="row">
             <div class="col-6">
-                <img th:src="@{/images/} + ${item.imageName}" width="400px" height="400px">
+                <img th:src="@{/images/} + ${item.imageName}" width="400px" height="400px" onerror="this.src='/images/onerror/basicImg.png'">
             </div>
             <div class="col-6">
                 <table class="table">
@@ -91,16 +91,12 @@
             <div class="col">
                 <table class="table">
                     <tr>
-                        <th scope="row">대표자명</th>
-                        <td>박관우</td>
+                        <th scope="row">브랜드명</th>
+                        <td th:text="${seller.brandName}"></td>
                     </tr>
                     <tr>
                         <th scope="row">이메일</th>
-                        <td>pgw4712@icloud.com</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">전화번호</th>
-                        <td>010-xxxx-xxxx</td>
+                        <td th:text="${seller.email}"></td>
                     </tr>
                 </table>
             </div>
@@ -132,7 +128,7 @@
         <hr>
         <div class="row justify-content-end">
             <input type="submit" th:value="수정">
-            <input type="button" th:value="취소" onclick="location.href='/item/itemList'">
+            <input type="button" th:value="취소" onclick="location.href='/seller/mypage'">
         </div>
     </form>
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

@@ -10,8 +10,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.AbstractPlatformTransactionManager;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import web.common.util.ImageUtil;
 import web.item.controller.dto.request.ItemRequest;
@@ -19,8 +18,8 @@ import web.item.controller.dto.response.ItemResponse;
 import web.item.domain.Item;
 import web.item.domain.ItemRepository;
 import web.item.domain.category.Category;
+import web.seller.domain.Seller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -35,13 +34,18 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public Long save(ItemRequest itemInsertRequest, Category category, HttpServletRequest req, HttpServletResponse res, MultipartFile file) throws IOException {
+    public Long save(ItemRequest itemInsertRequest, Category category, Seller seller, HttpServletResponse res, @RequestPart(value = "itemImage", required = false) MultipartFile file) throws IOException {
         ImageUtil imageUtil = new ImageUtil();
-        String fileName = imageUtil.uploadImage(res, file);
-        String path = Paths.get("module-web/src/main/resources/static/images").toAbsolutePath() + File.separator;
+
+        if (file.getSize() != 0) {
+            String fileName = imageUtil.uploadImage(res, file, seller.getId());
+            String path = Paths.get("module-web/src/main/resources/static/images").toAbsolutePath() + File.separator + seller.getId() + File.separator;
+            itemInsertRequest.setImageName(fileName);
+            itemInsertRequest.setImagePath(path);
+        }
+
         itemInsertRequest.setCategory(category);
-        itemInsertRequest.setImageName(fileName);
-        itemInsertRequest.setImagePath(path);
+        itemInsertRequest.setSeller(seller);
 
         Item item = itemInsertRequest.toItem();
         return itemRepository.save(item).getId();
@@ -53,29 +57,9 @@ public class ItemService {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public List<Item> itemList() {
-        return itemRepository.findAll();
-    }
-
-
-    public Long update(ItemRequest itemInsertRequest, Category category, HttpServletRequest req, HttpServletResponse res, @RequestParam(required = false) MultipartFile file, Long id) throws IOException {
+    public Long update(ItemRequest itemInsertRequest, Long id) throws IOException {
         Item item = itemRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        ImageUtil imageUtil = new ImageUtil();
 
-        if (file != null) {
-            String fileName = imageUtil.uploadImage(res, file);
-            String path = Paths.get("module-web/src/main/resources/static/images").toAbsolutePath() + File.separator;
-
-            if (!fileName.equals(item.getImageName())) {
-                imageUtil.deleteImage(item.getImagePath() + item.getImageName());
-            }
-
-            itemInsertRequest.setImagePath(path);
-            itemInsertRequest.setImageName(fileName);
-        } else {
-            itemInsertRequest.setImageName(item.getImageName());
-            itemInsertRequest.setImagePath(item.getImagePath());
-        }
         item.update(itemInsertRequest);
         return itemRepository.save(item).getId();
     }
@@ -111,6 +95,6 @@ public class ItemService {
     }
     @Transactional(readOnly = true)
     public Page<ItemResponse> findAllBySeller(Long id, Pageable pageable) {
-        return itemRepository.findByCategoryIdOrderByIdAsc(id, pageable).map(item -> new ItemResponse(item.getId(), item.getName(), item.getImagePath(), item.getPrice()));
+        return itemRepository.findBySellerIdOrderByIdAsc(id, pageable).map(item -> new ItemResponse(item.getId(), item.getName(), item.getImagePath(), item.getPrice()));
     }
 }

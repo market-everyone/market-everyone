@@ -2,10 +2,24 @@
 <html lang="en">
 <div th:fragment="common_sidebar" class="col-lg-3">
     <h1 class="my-4">카테고리</h1>
-    <div class="list-group">
-        <a href="#" class="list-group-item">Category 1</a>
-        <a href="#" class="list-group-item">Category 2</a>
-        <a href="#" class="list-group-item">Category 3</a>
+    <div class="list-group" id="sideBar">
+        <a th:href="@{/seller/mypage}" class="list-group-item">마이페이지</a>
+        <a th:href="@{/seller/itemList}" class="list-group-item">내 상품</a>
+        <a th:href="@{/seller/itemStatics}" class="list-group-item">상품 통계</a>
     </div>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:inline="javascript">
+        /* <![CDATA [*/
+        var status = /*[[ ${seller.sellerStatus} ]]*/
+            /* ]]> */
+
+            $(document).ready(function () {
+                if (status === 'WAIT' || status === 'DENIED') {
+                    $('#sideBar').children().eq(2).remove();
+                    $('#sideBar').children().eq(1).remove();
+                }
+                console.log(status);
+            });
+    </script>
 </div>
 </html>

@@ -50,4 +50,8 @@ public class SellerPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Seller getSeller() {
+        return this.seller;
+    }
 }
