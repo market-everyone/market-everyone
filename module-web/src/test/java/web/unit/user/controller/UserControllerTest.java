@@ -1,23 +1,22 @@
 package web.unit.user.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import web.unit.common.TestWithSecurity;
 import web.user.controller.UserController;
-import web.user.controller.dto.request.UserSignUpRequest;
 import web.user.service.UserService;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(value = {
     UserController.class
@@ -30,45 +29,43 @@ class UserControllerTest extends TestWithSecurity {
     @Autowired
     private MockMvc mockMvc;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     @DisplayName("API - 회원가입 / 성공")
     @Test
     void signup_Success() throws Exception {
         //given
-        UserSignUpRequest userSignUpRequest = createUserSignUpRequest();
+        MultiValueMap<String, String> userSignUpRequest = createSignUpRequest();
+        given(userService.checkUserSignUpRequestValidation(any(), any())).willReturn(true);
 
         //when
         ResultActions perform = mockMvc.perform(post("/users/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(userSignUpRequest)));
+                .params(userSignUpRequest));
 
         //then
-        perform.andExpect(status().isOk());
+        perform.andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:login"));
     }
 
-    @DisplayName("API - 회원가입 / 실패(이메일 중복)")
+    @DisplayName("API - 회원가입 / 실패")
     @Test
-    void signup_DuplicateEmail_Fail() throws Exception {
+    void signup_Fail() throws Exception {
         //given
-        UserSignUpRequest userSignUpRequest = createUserSignUpRequest();
-        given(userRepository.existsByEmail(userSignUpRequest.getEmail())).willReturn(true);
+        MultiValueMap<String, String> userSignUpRequest = createSignUpRequest();
+        given(userService.checkUserSignUpRequestValidation(any(), any())).willReturn(false);
 
         //when
         ResultActions perform = mockMvc.perform(post("/users/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(userSignUpRequest)));
+                        .params(userSignUpRequest));
 
         //then
-        perform.andDo(print());
+        perform.andExpect(view().name("user/join"));
     }
 
-    private UserSignUpRequest createUserSignUpRequest() {
-        return UserSignUpRequest.builder()
-                .email("mk2e@gmail.com")
-                .password("test1234")
-                .passwordConfirm("test1234")
-                .nickname("mk2e")
-                .build();
+    private MultiValueMap<String, String> createSignUpRequest() {
+        MultiValueMap<String, String> signUpRequest = new LinkedMultiValueMap<>();
+        signUpRequest.add("email", "test@gmail.com");
+        signUpRequest.add("password", "test1234");
+        signUpRequest.add("passwordConfirm", "test1234");
+        signUpRequest.add("nickname", "testname");
+        return signUpRequest;
     }
 }

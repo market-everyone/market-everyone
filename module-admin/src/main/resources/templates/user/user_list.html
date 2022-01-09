@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="layout/base :: layout (~{::title}, ~{::content})" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마켓에브리원-사용자 관리</title>
+</head>
+
+<body id="page-top">
+<div class="container-fluid" th:fragment="content">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">사용자 목록</h1>
+    <p class="mb-4">해당 페이지에서 사용자정보를 관리할 수 있습니다.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered text-center" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>이름</th>
+                        <th>아이디</th>
+                        <th>주소</th>
+                        <th>가입날짜</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${result.dtoList}">
+                        <td th:text="${user.id}"></td>
+                        <td><a th:href="@{/user/{userNo}(userNo=${user.id})}"
+                               th:text="${user.name}">
+                        </a></td>
+                        <td><a th:text="${user.email}">
+                        </a></td>
+                        <td th:text="|${user.address.address} ${user.address.detailAddress}|"></td>
+<!--                        <td th:text="${user.createDate}"></td>-->
+                        <td th:text="${#temporals.format(user.createDate, 'yyyy/MM/dd')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <ul class="pagination h-100 justify-content-center align-items-center">
+                    <li class="page-item" th:if="${result.prev}">
+                        <a class="page-link"
+                           tabindex="-1" th:href="@{/user(page=${result.start - 1})}">Previous</a>
+                    </li>
+
+                    <li th:class=" 'page-item ' + ${result.page == page?'active':''}"
+                        th:each="page : ${result.pageList}">
+                        <a class="page-link"
+                           th:href="@{/user(page = ${page})}">[[${page}]]</a>
+                    </li>
+
+                    <li class="page-item" th:if="${result.next}">
+                        <a class="page-link"
+                           th:href="@{/user(page = ${result.end + 1})}">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

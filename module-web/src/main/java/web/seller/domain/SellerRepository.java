@@ -5,11 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface SellerRepository extends JpaRepository<Seller, Long>, SellerRepositoryCustom {
+    Optional<Seller> findByEmail(String email);
 
     boolean existsByEmail(String email);
 
     boolean existsByBrandName(String brandName);
-
-    Optional<Seller> findByEmail(String email);
-
 }

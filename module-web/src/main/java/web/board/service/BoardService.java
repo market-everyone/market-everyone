@@ -13,6 +13,7 @@ import web.board.domain.BoardRepository;
 import web.board.domain.Type;
 import web.common.dto.PageRequestDTO;
 import web.common.dto.PageResultDTO;
+import web.exception.board.BoardNotFoundException;
 
 @RequiredArgsConstructor
 @Service
@@ -30,5 +31,12 @@ public class BoardService {
         Pageable pageable = requestDTO.getPageable(Sort.by("id"));
         Page<Board> result = boardRepository.findAllByType(type, pageable);
         return new PageResultDTO<>(result, BoardResponseDTO::new);
+    }
+
+    public BoardResponseDTO findById(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(BoardNotFoundException::new);
+
+        return BoardResponseDTO.of(board);
     }
 }
