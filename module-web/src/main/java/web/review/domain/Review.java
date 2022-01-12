@@ -2,6 +2,7 @@ package web.review.domain;
 
 import lombok.*;
 import web.item.domain.Item;
+import web.user.domain.User;
 
 import javax.persistence.*;
 
@@ -19,6 +20,10 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "ITEM_NO")
     private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "USEr_NO")
+    private User user;
 
     private String title;
 
