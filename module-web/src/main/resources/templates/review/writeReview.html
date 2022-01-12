@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="layout/user/base :: layout (~{::head}, ~{::content})">
+<head th:fragment="head">
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <meta content="" name="description">
+  <meta content="" name="author">
+  <title>마켓에브리원 | 나의 리뷰</title>
+
+  <!-- Custom fonts for this template-->
+  <link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.min.css}" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link rel="stylesheet" th:href="@{/css/sb-admin-2.min.css}" type="text/css">
+</head>
+
+
+<div th:fragment="content" class="col-lg-9">
+  <div>
+    <div class="table-responsive">
+      <div>
+        <h3>리뷰 작성하기</h3>
+
+        <form th:action="@{/reviews/save}" method="post">
+          <table class="table custom-table">
+            <tr>
+              <td>상품명</td>
+              <td th:text="${item.name}"></td>
+            </tr>
+            <tr>
+              <td>작성자명</td>
+              <td th:text="${user.name}"></td>
+            </tr>
+            <tr>
+              <td>제목</td>
+              <td><input type="text" name="title"></td>
+            </tr>
+            <tr>
+              <td>만족도</td>
+              <td>
+                <select name="star">
+                  <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                  <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                  <option value="3">&#9733;&#9733;&#9733;</option>
+                  <option value="2">&#9733;&#9733;</option>
+                  <option value="1">&#9733;</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>내용</td>
+              <td><textarea name="content" th:cols="50" th:rows="10" placeholder="내용을 20자 이상 남겨주세요."></textarea></td>
+            </tr>
+          </table>
+
+          <div th:align="center">
+            <button type="submit" name="item" th:value="${item.id}" class="btn btn-success">리뷰 등록</button>
+            <button type="button"> 홈으로 가기 </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</html>
