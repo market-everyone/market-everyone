@@ -3,12 +3,8 @@ package web.item.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,14 +82,14 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public List<ItemResponse> findAllBySellerId(Long id, Pageable pageable) {
-        return itemRepository.findByCategoryIdOrderByIdDesc(id, pageable)
+    public List<ItemResponse> findAllBySellerId(Long id) {
+        return itemRepository.findBySellerIdOrderByIdDesc(id)
                 .stream()
                 .map(ItemResponse::of)
                 .collect(Collectors.toList());
     }
     @Transactional(readOnly = true)
     public Page<ItemResponse> findAllBySeller(Long id, Pageable pageable) {
-        return itemRepository.findBySellerIdOrderByIdAsc(id, pageable).map(item -> new ItemResponse(item.getId(), item.getName(), item.getImagePath(), item.getPrice()));
+        return itemRepository.findBySellerIdOrderByIdAsc(id, pageable).map(item -> new ItemResponse(item.getId(), item.getName(), item.getImagePath(), item.getPrice(), item.getQuantity()));
     }
 }

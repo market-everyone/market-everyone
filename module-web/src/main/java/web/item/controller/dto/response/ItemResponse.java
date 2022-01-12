@@ -13,6 +13,7 @@ public class ItemResponse {
     private String name;
     private String imagePath;
     private int price;
+    private int quantity;
 
     public static ItemResponse of(Item item) {
         return ItemResponse.builder()
@@ -20,6 +21,7 @@ public class ItemResponse {
                 .name(item.getName())
                 .imagePath(item.getImagePath())
                 .price(item.getPrice())
+                .quantity(item.getQuantity())
                 .build();
     }
 }
