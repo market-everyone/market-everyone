@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import web.common.auth.SellerAuthConverter;
 import web.item.controller.dto.response.ItemResponse;
+import web.item.domain.Item;
 import web.item.service.ItemService;
+import web.order.domain.item.service.OrderItemService;
 import web.seller.controller.dto.SellerLoginDTO;
 import web.seller.controller.dto.SellerRequestDTO;
 import web.seller.domain.Seller;
-import web.seller.domain.SellerStatus;
 import web.seller.service.SellerService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +33,7 @@ public class SellerController {
 
     private final SellerService sellerService;
     private final ItemService itemService;
+    private final OrderItemService orderItemService;
 
     @GetMapping("/join")
     public String signUpPage(@ModelAttribute SellerRequestDTO sellerRequestDTO) {
@@ -83,5 +85,21 @@ public class SellerController {
         model.addAttribute("items", items);
 
         return "seller/itemList";
+    }
+
+    @GetMapping("/static/{id}")
+    public String itemStatics(@PathVariable Long id, Model model) {
+
+        int sellCount = orderItemService.findSellCount(id);
+        int quantity = itemService.findById(id).getQuantity();
+        int sellPrice = orderItemService.findSellPrice(id);
+        Item item = itemService.findById(id);
+
+        model.addAttribute("sellCount", sellCount);
+        model.addAttribute("sellPrice", sellPrice);
+        model.addAttribute("quantity", quantity);
+        model.addAttribute("itemName", item.getName());
+
+        return "seller/itemStatics";
     }
 }

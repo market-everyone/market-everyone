@@ -111,17 +111,6 @@ public class ItemController {
         return "redirect:/seller/itemList";
     }
 
-
-    @GetMapping("/staticList")
-    public String staticList() {
-        return "item/staticList";
-    }
-
-    @GetMapping("/statics")
-    public String statics() {
-        return "item/itemStatics";
-    }
-
     @GetMapping("/{id}")
     public String itemDetail(@PathVariable Long id, Model model) {
 

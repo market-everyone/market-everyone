@@ -11,7 +11,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByCategoryId(Long categoryId);
 
-    List<Item> findByCategoryIdOrderByIdDesc(Long categoryId, Pageable pageable);
+    List<Item> findBySellerIdOrderByIdDesc(Long id);
 
     Page<Item> findBySellerIdOrderByIdAsc(Long sellerId, Pageable pageable);
 
