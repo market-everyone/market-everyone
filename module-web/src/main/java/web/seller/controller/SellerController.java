@@ -23,6 +23,7 @@ import web.seller.service.SellerService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -80,9 +81,11 @@ public class SellerController {
 
         Seller seller = SellerAuthConverter.findCurrentUserFromAuth(authentication);
         Page<ItemResponse> items = itemService.findAllBySeller(seller.getId(), pageable);
+        String path = File.separator + "images" + File.separator + seller.getId() + File.separator;
 
         model.addAttribute("seller", seller);
         model.addAttribute("items", items);
+        model.addAttribute("path", path);
 
         return "seller/itemList";
     }

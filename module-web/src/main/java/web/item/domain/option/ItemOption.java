@@ -13,10 +13,11 @@ import javax.persistence.*;
 public class ItemOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ITEM_OPTION_NO")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_no")
+    @JoinColumn(name = "ITEM_NO")
     private Item item;
 
     private String name;

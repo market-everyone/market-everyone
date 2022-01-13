@@ -2,12 +2,12 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/testdb"
-    username: root
-    password: root
+    url: "jdbc:mysql://market.csah5yoduwry.ap-northeast-2.rds.amazonaws.com:3306/market?autoReconnect=true&characterEncoding=utf8&serverTimezone=Asia/Seoul"
+    username: market
+    password: market12
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:

@@ -10,7 +10,7 @@
         <input type="hidden" th:value="${item.id}" name="itemId">
         <div class="row">
             <div class="col-6">
-                <img th:src="@{/images/} + ${item.imageName}" width="400px" height="400px" onerror="this.src='/images/onerror/basicImg.png'">
+                <img th:src="@{${path}} + ${seller.imagePath}" width="400px" height="400px" onerror="this.src='/images/onerror/basicImg.png'">
             </div>
             <div class="col-6">
                 <table class="table">
@@ -112,15 +112,15 @@
                 <table class="table">
                     <tr>
                         <th scope="row">배송</th>
-                        <td><input type="text" name="delivery" th:value="${item.delivery}" placeholder="배송 규정을 기입하세요."></td>
+                        <td><textarea name="delivery" th:value="${item.delivery}" placeholder="배송 규정을 기입하세요." style="resize: none" cols="60"></textarea></td>
                     </tr>
                     <tr>
                         <th scope="row">교환</th>
-                        <td><input type="text" name="exchange" th:value="${item.exchange}" placeholder="교환 규정을 기입하세요."></td>
+                        <td><textarea name="exchange" th:value="${item.exchange}" placeholder="교환 규정을 기입하세요." style="resize: none" cols="60"></textarea></td>
                     </tr>
                     <tr>
                         <th scope="row">환불</th>
-                        <td><input type="text" name="refund" th:value="${item.refund}" placeholder="환불 규정을 기입하세요."></td>
+                        <td><textarea name="refund" th:value="${item.refund}" placeholder="환불 규정을 기입하세요." style="resize: none" cols="60"></textarea></td>
                     </tr>
                 </table>
             </div>
@@ -128,7 +128,7 @@
         <hr>
         <div class="row justify-content-end">
             <input type="submit" th:value="수정">
-            <input type="button" th:value="취소" onclick="location.href='/seller/mypage'">
+            <input type="button" th:value="취소" onclick="location.href='/seller/itemList'">
         </div>
     </form>
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

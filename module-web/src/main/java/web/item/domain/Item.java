@@ -18,10 +18,11 @@ import java.util.List;
 public class Item{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ITEM_NO")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "category_no")
+    @JoinColumn(name = "CATEGORY_NO")
     private Category category;
 
     private String name;

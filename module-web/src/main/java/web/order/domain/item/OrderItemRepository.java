@@ -8,7 +8,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
     long countByItemId(Long id);
 
-    @Query(value = " select sum (m.price)" +
+    @Query(value = " select coalesce(sum (m.price), 0)" +
                    " from OrderItem m" +
                    " where m.item.id= :id")
     long findByItemId(@Param("id") Long id);

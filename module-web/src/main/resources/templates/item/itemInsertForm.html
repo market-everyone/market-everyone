@@ -111,15 +111,15 @@
                 <table class="table">
                     <tr>
                         <th scope="row">배송</th>
-                        <td><input type="text" name="delivery" placeholder="배송 규정을 기입하세요."></td>
+                        <td><textarea name="delivery" placeholder="배송 규정을 기입하세요" style="resize: none" cols="60"></textarea></td>
                     </tr>
                     <tr>
                         <th scope="row">교환</th>
-                        <td><input type="text" name="exchange" placeholder="교환 규정을 기입하세요."></td>
+                        <td><textarea name="exchange" placeholder="교환 규정을 기입하세요." style="resize: none" cols="60"></textarea></td>
                     </tr>
                     <tr>
                         <th scope="row">환불</th>
-                        <td><input type="text" name="refund" placeholder="환불 규정을 기입하세요."></td>
+                        <td><textarea name="refund" placeholder="환불 규정을 기입하세요." style="resize: none" cols="60"></textarea></td>
                     </tr>
                 </table>
             </div>
@@ -127,7 +127,7 @@
         <hr>
         <div class="row justify-content-end">
             <input type="submit" th:value="'등록'">
-            <input type="button" th:value="'취소'" onclick="location.href='/seller/mypage'">
+            <input type="button" th:value="'취소'" onclick="location.href='/seller/itemList'">
         </div>
     </form>
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

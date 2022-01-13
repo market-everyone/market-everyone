@@ -22,6 +22,7 @@ import web.seller.service.SellerService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -70,10 +71,12 @@ public class ItemController {
         Seller seller = SellerAuthConverter.findCurrentUserFromAuth(authentication);
         List<Category> categories = categoryService.findAll();
         List<ItemOption> itemOptions = optionService.findAllByItemId(item.getId());
+        String path = File.separator + "images" + File.separator + seller.getId() + File.separator;
         model.addAttribute("item", item);
         model.addAttribute("categoryList", categories);
         model.addAttribute("options", itemOptions);
         model.addAttribute("seller", seller);
+        model.addAttribute("path", path);
 
         return "item/itemUpdateForm";
     }

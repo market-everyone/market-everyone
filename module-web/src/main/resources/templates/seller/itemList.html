@@ -22,7 +22,7 @@
         <hr>
         <div class="row" th:each="item : ${items}">
             <div class="col-4 p-0">
-                <img th:src="${item.imagePath}" alt="상품 이미지" width="200px" height="200px" onerror="this.src='/images/onerror/basicImg.png'">
+                <img th:src="@{${path}} + ${seller.imagePath}" alt="상품 이미지" width="200px" height="200px" onerror="this.src='/images/onerror/basicImg.png'">
             </div>
             <div class="col">
                 <table class="table">
