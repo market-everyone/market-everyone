@@ -42,3 +42,12 @@ jobs:
           key: ${{ secrets.RSA_PRIVATE_KEY }}
           source: "./module-admin/build/libs/*.jar"
           target: "/home/ec2-user/market-everyone/"
+          
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          username: ec2-user
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.RSA_PRIVATE_KEY }}
+          script_stop: true  # stop script after first failure
+          script: nohub java -jar 
